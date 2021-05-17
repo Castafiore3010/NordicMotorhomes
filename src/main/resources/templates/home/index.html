@@ -7,5 +7,39 @@
 <body>
 <h1>HELLO LOVELIES</h1>
 
+<div class="form-container">
+    <div>
+        <table class="searchTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Options</th>
+                <th>Appearance</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer: ${customers}">
+
+                <!--/*@thymesVar id="customer" type="com.example.nordicmotorhomes.model.Customer"*/-->
+                <td th:text="${customer.person_id}"></td>
+                <td th:text="${customer.first_name}"></td>
+                <td th:text="${customer.last_name}"></td>
+
+            </tr>
+            <tr th:each="employee: ${employees}">
+                <!--/*@thymesVar id="employee" type="com.example.nordicmotorhomes.model.Employee"*/-->
+                <td th:text="${employee.person_id}"></td>
+                <td th:text="${employee.first_name}"></td>
+                <td th:text="${employee.last_name}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
 </body>
 </html>
