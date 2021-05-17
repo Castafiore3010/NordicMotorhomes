@@ -17,8 +17,6 @@ public class Customer extends Person {
 
     }
 
-
-
     public boolean isActiveContract() {
         return activeContract;
     }

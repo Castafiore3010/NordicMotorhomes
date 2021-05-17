@@ -6,9 +6,9 @@ import javax.persistence.Id;
 @Entity
 public class ContactPoint {
     @Id
-    private int contactPoint_id;
+    private int contact_point_id;
     private double latitude, longitude;
-    private String contactPoint_name;
+    private String contact_point_name;
     private boolean validLocation;
 
 
@@ -17,21 +17,21 @@ public class ContactPoint {
 
 
 
-    public ContactPoint(int contactPoint_id, double latitude, double longitude, String contactPoint_name, boolean validLocation) {
-        this.contactPoint_id = contactPoint_id;
+    public ContactPoint(int contactPoint_id, double latitude, double longitude, String contact_point_name, boolean validLocation) {
+        this.contact_point_id = contactPoint_id;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.contactPoint_name = contactPoint_name;
+        this.contact_point_name = contact_point_name;
         this.validLocation = validLocation;
     }
 
 
-    public int getContactPoint_id() {
-        return contactPoint_id;
+    public int getContact_point_id() {
+        return contact_point_id;
     }
 
-    public void setContactPoint_id(int contactPoint_id) {
-        this.contactPoint_id = contactPoint_id;
+    public void setContact_point_id(int contactPoint_id) {
+        this.contact_point_id = contactPoint_id;
     }
 
     public double getLatitude() {
@@ -50,12 +50,12 @@ public class ContactPoint {
         this.longitude = longitude;
     }
 
-    public String getContactPoint_name() {
-        return contactPoint_name;
+    public String getContact_point_name() {
+        return contact_point_name;
     }
 
-    public void setContactPoint_name(String contactPoint_name) {
-        this.contactPoint_name = contactPoint_name;
+    public void setContact_point_name(String contactPoint_name) {
+        this.contact_point_name = contactPoint_name;
     }
 
     public boolean isValidLocation() {
