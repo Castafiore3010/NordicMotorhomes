@@ -53,7 +53,7 @@ public class Geocoder {
     public static void main(String[] args) throws IOException, InterruptedException{
         Geocoder geocoder = new Geocoder();
 
-        double[] coordinates = geocoder.getLatitudeFromStreetAdress("10 Burmeistersgade, København, 1429");
+        double[] coordinates = geocoder.getLatitudeFromStreetAdress("Burmeistersgade 10, København, 1429");
 
         System.out.println("Latitude = " + coordinates[0] + " Longitude = " + coordinates[1]);
     }
