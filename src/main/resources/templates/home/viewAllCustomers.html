@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>View All Customers</title>
@@ -34,7 +34,7 @@
             </a>
           </div>
           <div id="knap2">
-            <a>
+            <a th:href="@{'/updatePersonId='+${customer.person_id}}">
               <button class="btn-update">Update</button>
             </a>
           </div>

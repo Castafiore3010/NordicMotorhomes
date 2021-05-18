@@ -30,4 +30,6 @@ public class PersonService {
     public Person createNewCustomer(Person person) {
         return personRepository.insertPerson(person);
     }
+
+    public Person updatePerson(Person person) { return personRepository.updatePerson(person);}
 }

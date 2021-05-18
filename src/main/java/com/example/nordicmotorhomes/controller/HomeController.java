@@ -57,4 +57,19 @@ public class HomeController {
 
         return "home/inspectPerson";
     }
+
+    @GetMapping ("/updatePersonId={person_id}")
+    public String updateCustomerButton(@PathVariable ("person_id") int id, Model model){
+        Person person = personService.fetchPersonById(id);
+        model.addAttribute("person",person);
+        return "home/updatePerson";
+    }
+
+    @PostMapping("/updatePerson")
+    public String updatePerson(@ModelAttribute Customer person, Model model){
+        model.addAttribute("person",person);
+        personService.updatePerson(person);
+        return "home/index";
+    }
+
 }
