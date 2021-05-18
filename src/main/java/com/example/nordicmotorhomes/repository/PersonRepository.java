@@ -75,7 +75,6 @@ public class PersonRepository  {
 
     public Person updatePerson(Person person){
 
-
         String persons_sql = "UPDATE persons SET "+
                 " first_name='"+person.getFirst_name()+"',"+
                 " last_name='"+person.getLast_name()+"', " +
@@ -143,21 +142,10 @@ public class PersonRepository  {
         return result;
     }
 
-    public Integer cityIdByCitynameAndCountryId (String city_name, int country_id){
-        String sql= "SELECT city_id from cities join countries using (country_id) where city_name = ? and country_id = ?";
-        Integer result = template.queryForObject(sql,Integer.class, city_name, country_id);
-        return result;
-    }
-
-    public Integer zipcodeIdByZipcodeAndCityId(String zipcode, int city_id){
-        String sql = "SELECT zipcode_id from zipcodes where zipcode = ? and city_id = ?";
-        Integer result = template.queryForObject(sql,Integer.class,zipcode,city_id);
-        return result;
-    }
     //</editor-fold>  //
 
     // update other tables
-
+    //<editor-fold desc="Update methods for relevant tables">
     public Person updateAddress(Person person) {
         String sql = "update addresses set street_name ='"+ person.getStreet_name()+"' WHERE address_id = '"+ person.getAddress_id()+"'";
         template.update(sql);
@@ -184,5 +172,6 @@ public class PersonRepository  {
         return null;
 
     }
+    //</editor-fold>
 
 }
