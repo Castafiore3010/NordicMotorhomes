@@ -13,6 +13,7 @@
 
     <script>
         function initMap() {
+            geocoder = new google.maps.Geocoder();
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 7,
                 center: { lat: 55.65646, lng: 11.30698 },
@@ -64,7 +65,7 @@
     <style type="text/css">
         /* Set the size of the div element that contains the map */
         #map {
-            height: 200px;
+            height: 350px;
             /* The height is 400 pixels */
             width: 50%;
             /* The width is the width of the web page */
