@@ -31,7 +31,7 @@ public class Geocoder {
         return (String) geocodingResponse.body();
     }
     public double[] getLatitudeFromStreetAdress(String fullAddress) throws IOException, InterruptedException{
-        // address example: 11 Wall St, New York, NY 10005
+        // address example: 10 Burmeistersgade, København, 1429
         double[] coordinates = new double[2];
         ObjectMapper mapper = new ObjectMapper();
         Geocoder geocoder = new Geocoder();
