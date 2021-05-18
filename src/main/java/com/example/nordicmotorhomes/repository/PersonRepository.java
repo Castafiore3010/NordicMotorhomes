@@ -75,78 +75,7 @@ public class PersonRepository  {
 
     public Person updatePerson(Person person){
 
-        boolean countryChanged = false;
-        boolean cityChanged = false;
-        boolean zipcodeChanged = false;
-        boolean addressChanged = false;
 
-
-        //Countries
-        int country_id = person.getCountry_id();
-        if (checkDuplicateEntry("countries","country_name",person.getCountry_name()) < 1){ //kontrol af duplicates
-            String ins_country = "INSERT INTO countries (country_name) values ('"+person.getCountry_name()+"')";
-            template.update(ins_country);
-            country_id = countryIdByCountryName(person.getCountry_name());
-
-                String country_sql = "UPDATE countries SET country_name='"+person.getCountry_name()+"' WHERE country_id=" + country_id;
-                template.update(country_sql);
-
-        }
-
-        //City
-        int city_id = person.getCity_id();
-
-        if (checkCityExistsInCountry(person.getCity_name(),country_id)<1){ //Hvis en by ikke findes i det tilsvarende land:
-            String ins_city = "INSERT INTO cities (city_name, country_id) VALUES ('"+person.getCity_name()+"','"+country_id+"')";
-            template.update(ins_city);
-
-            city_id = cityIdByCitynameAndCountryId(person.getCity_name(), country_id);
-
-            //String city_sql = "UPDATE cities SET city_name='"+person.getCity_name()+"' WHERE city_id=" + city_id;
-            //template.update(city_sql);
-
-        }
-
-        //Zipcodes
-        int zipcode_id = person.getZipcode_id();
-
-        if(zipcodeExistsInCountry(person.getZipcode(), country_id)<1){
-            String ins_zip = "INSERT INTO zipcodes (zipcode, city_id) VALUES ('"+person.getZipcode()+"','"+city_id+"')";
-            template.update(ins_zip);
-
-            zipcode_id = zipcodeIdByZipcodeAndCityId(person.getZipcode(),city_id);
-
-                String zip_sql = "UPDATE zipcodes SET zipcode='"+person.getZipcode()+"', city_id='"+city_id+"' WHERE zipcode_id=" + person.getZipcode_id();
-                template.update(zip_sql);
-
-        }
-
-        //Addresses
-
-             /*
-            if (countryChanged){
-            String country_sql = "UPDATE countries SET country_name='"+person.getCountry_name()+"' WHERE country_id=" + country_id;
-            template.update(country_sql);
-            }
-
-            if (cityChanged){
-            String city_sql = "UPDATE cities SET city_name='"+person.getCity_name()+"' WHERE city_id=" + city_id;
-            template.update(city_sql);
-            }
-
-            if (zipcodeChanged){
-            String zip_sql = "UPDATE zipcodes SET zipcode='"+person.getZipcode()+"', city_id='"+city_id+"' WHERE zipcode_id=" + person.getZipcode_id();
-            template.update(zip_sql);
-            }
-
-
-         */
-
-        String addresses_sql = "UPDATE addresses SET street_name='"+person.getStreet_name()+"', zipcode_id='"+zipcode_id+"' WHERE address_id = '" + person.getAddress_id()+"'";
-        template.update(addresses_sql);
-
-
-        //Person
         String persons_sql = "UPDATE persons SET "+
                 " first_name='"+person.getFirst_name()+"',"+
                 " last_name='"+person.getLast_name()+"', " +
@@ -157,8 +86,11 @@ public class PersonRepository  {
                 " person_type='"+person.getPerson_type()+"', " +
                 " person_role='"+person.getPerson_role()+"'" +
                 " WHERE person_id = "+ person.getPerson_id();
-
         template.update(persons_sql);
+        updateAddress(person);
+        updateZipcode(person);
+        updateCity(person);
+        updateCountry(person);
         return person;
     }
 
@@ -224,6 +156,33 @@ public class PersonRepository  {
     }
     //</editor-fold>  //
 
+    // update other tables
 
+    public Person updateAddress(Person person) {
+        String sql = "update addresses set street_name ='"+ person.getStreet_name()+"' WHERE address_id = '"+ person.getAddress_id()+"'";
+        template.update(sql);
+        return null;
+    }
+
+    public Person updateZipcode(Person person) {
+        String sql = "update zipcodes set zipcode ='"+ person.getZipcode()+"' WHERE zipcode_id = '"+ person.getZipcode_id()+"'";
+        template.update(sql);
+        return null;
+
+    }
+
+    public Person updateCountry(Person person) {
+        String sql = "update countries set country_name ='"+ person.getCountry_name()+"' WHERE country_id = '"+ person.getCountry_id()+"'";
+        template.update(sql);
+        return null;
+
+    }
+
+    public Person updateCity(Person person) {
+        String sql = "update cities set city_name ='"+ person.getCity_name()+"' WHERE city_id = '"+ person.getCity_id()+"'";
+        template.update(sql);
+        return null;
+
+    }
 
 }
