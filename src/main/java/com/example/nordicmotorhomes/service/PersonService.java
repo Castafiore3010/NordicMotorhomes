@@ -15,6 +15,16 @@ public class PersonService {
     PersonRepository personRepository;
 
 
-    public List<Customer> fetchAllCustomers() { return personRepository.fetchAllCustomers(); }
-    public List<Employee> fetchAllEmployees() { return personRepository.fetchAllEmployees(); }
+    public List<Customer> fetchAllCustomers() {
+        return personRepository.fetchAllCustomers();
+    }
+
+    public List<Employee> fetchAllEmployees() {
+        return personRepository.fetchAllEmployees();
+    }
+
+
+    public Person createNewCustomer(Person person) {
+        return personRepository.insertPerson(person);
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,5 +27,25 @@ public class HomeController {
         model.addAttribute("employees", personService.fetchAllEmployees());
 
         return "home/index";
+    }
+
+    @GetMapping("/createCustomer")
+        public String createCustomerLink() {
+            return "home/createCustomer";
+        }
+
+    @PostMapping("/createCustomer")
+    public String createCustomer(@ModelAttribute Customer customer, Model model) {
+        model.addAttribute("customer", customer);
+        personService.createNewCustomer(customer);
+
+        return "redirect:/viewAllCustomers";
+    }
+
+    @GetMapping("/viewAllCustomers")
+    public String viewAllCustomers(Model model) {
+        model.addAttribute("customers", personService.fetchAllCustomers());
+
+        return "home/viewAllCustomers";
     }
 }

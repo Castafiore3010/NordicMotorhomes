@@ -2,6 +2,7 @@ package com.example.nordicmotorhomes.repository;
 
 import com.example.nordicmotorhomes.model.Customer;
 import com.example.nordicmotorhomes.model.Employee;
+import com.example.nordicmotorhomes.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,5 +23,96 @@ public class PersonRepository  {
     public List<Employee> fetchAllEmployees() {
         return template.query("SELECT * FROM persons where person_type = 'staff'", new BeanPropertyRowMapper<>(Employee.class));
     }
+
+    public Person insertPerson(Person person) {
+
+        // insert country
+        String country_sql = "INSERT INTO countries (country_name) VALUES ('"+person.getCountry_name()+"')";
+        if (checkDuplicateEntry("countries", "country_name", person.getCountry_name()) < 1) {
+            template.update(country_sql);
+        }
+
+        // insert city
+        Integer country_id = countryIdByCountryName(person.getCountry_name());
+        String city_sql = "INSERT INTO cities (city_name, country_id) VALUES ('"+person.getCity_name()+"','"+country_id+"')";
+        if (checkCityExistsInCountry(person.getCity_name(), country_id) < 1) {
+            template.update(city_sql);
+        }
+
+        // zipcodes
+        Integer city_id = cityIdByCityName(person.getCity_name());
+        String zipcode_sql = "INSERT INTO zipcodes (zipcode, city_id) VALUES ('"+person.getZipcode()+"','"+city_id+"')";
+        if (zipcodeExistsInCountry(person.getZipcode(),country_id) < 1) {
+            template.update(zipcode_sql);
+        }
+
+
+        // addresses
+        Integer zipcode_id = zipcodeIdByZipcode(person.getZipcode());
+        String address_sql = "INSERT INTO addresses (street_name, zipcode_id) VALUES ('"+person.getStreet_name()+"','"+zipcode_id+"')";
+        template.update(address_sql);
+
+
+        // persons
+        Integer address_id = addressIdByAddNameAndZipcodeId(person.getStreet_name(), zipcode_id);
+        String person_sql = "INSERT INTO persons (first_name, last_name, email, phonenumber, birthdate, address_id, person_type, person_role)" +
+                " VALUES ('"+person.getFirst_name()+"','"+person.getLast_name()+"','"+person.getEmail()+"','"
+                +person.getPhoneNumber()+"','"+person.getBirthdate()+"','"+address_id+"','"+person.getPerson_type()+"','"
+                +person.getPerson_role()+"')";
+        template.update(person_sql);
+        return null;
+    }
+
+    // ID getter methods
+    //<editor-fold desc="ID-getters">
+    public Integer countryIdByCountryName(String country_name) {
+        String sql = "SELECT country_id from countries where country_name = ?";
+        Integer country_id = template.queryForObject(sql, Integer.class, country_name);
+        return country_id;
+    }
+
+    public Integer cityIdByCityName(String city_name) {
+        String sql = "SELECT city_id from cities where city_name = ?";
+        Integer city_id = template.queryForObject(sql, Integer.class, city_name);
+        return city_id;
+    }
+
+    public Integer zipcodeIdByZipcode(String zipcode) {
+        String sql = "SELECT zipcode_id from zipcodes where zipcode = ?";
+        Integer zipcode_id = template.queryForObject(sql, Integer.class, zipcode);
+        return zipcode_id;
+
+    }
+
+    public Integer addressIdByAddNameAndZipcodeId(String street_name, Integer zipcode_id) {
+        String sql = "SELECT address_id from addresses where street_name = ? and zipcode_id = ?";
+        Integer address_id = template.queryForObject(sql, Integer.class,street_name, zipcode_id);
+        return address_id;
+    }
+    //</editor-fold>
+
+    // Duplicate checker methods
+    //<editor-fold desc="Duplicate Checkers">
+    public Integer checkDuplicateEntry(String table_name, String attributeToCheck, String attributeValue) {
+        String sql = "SELECT count(*) from " + table_name + " WHERE " + attributeToCheck + " = ?";
+        Integer result = template.queryForObject(sql, Integer.class, attributeValue);
+        return result;
+    }
+
+    public Integer checkCityExistsInCountry(String city_name, int country_id) {
+        String sql = "SELECT count(*) from cities WHERE city_name = ? and country_id = ?";
+        Integer result = template.queryForObject(sql, Integer.class, city_name, country_id);
+        return result;
+    }
+
+    public Integer zipcodeExistsInCountry(String zipcode, int country_id) {
+        String sql = "SELECT count(*) FROM zipcodes join cities using (city_id) join countries using (country_id)" +
+                " WHERE zipcode = ? and country_id = ?";
+        Integer result = template.queryForObject(sql, Integer.class, zipcode, country_id);
+        return result;
+    }
+    //</editor-fold>  //
+
+
 
 }

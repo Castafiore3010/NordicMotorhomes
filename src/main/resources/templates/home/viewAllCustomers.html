@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View All Customers</title>
+  <link rel="stylesheet" href="Index.css">
+</head>
+<body>
+
+<div class ="form-container">
+  <table class="searchTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Full name</th>
+      <th>Email</th>
+      <th>Options</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer: ${customers}">
+      <td th:text="${customer.person_id}"></td>
+      <td th:utext="${customer.first_name}+ ' ' +${customer.last_name}"></td>
+      <td th:text="${customer.email}"></td>
+      <div id="buttonBox">
+        <td>
+          <div id="knap1">
+            <a>
+              <button class="btn-inspect">Inspect</button>
+            </a>
+          </div>
+          <div id="knap2">
+            <a>
+              <button class="btn-update">Update</button>
+            </a>
+          </div>
+
+          <div id="knap3">
+            <a>
+              <button class="btn-delete" onclick="alert('Successfully deleted the customer! :) You cant go back btw....')">Delete</button>
+            </a>
+          </div>
+        </td>
+      </div>
+
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
