@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 // https://developer.here.com/blog/how-to-use-geocoding-in-java-with-the-here-geocoding-search-api
 public class Geocoder {
     private static final String GEOCODING_RESOURCE = "https://geocode.search.hereapi.com/v1/geocode";
-    private static final String API_KEY = "AIzaSyAWYC7pYphver783c0pLORPEY4b-N6aq2A";
+    private static final String API_KEY = "gx9WFHE_gmQTT6m9eqBjB47Qzn7Moe757HgM6WKJzz8";
 
     public String GeocodeSync(String query) throws IOException, InterruptedException {
 
@@ -48,6 +48,14 @@ public class Geocoder {
 
         return coordinates;
 
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException{
+        Geocoder geocoder = new Geocoder();
+
+        double[] coordinates = geocoder.getLatitudeFromStreetAdress("10 Burmeistersgade, København, 1429");
+
+        System.out.println("Latitude = " + coordinates[0] + " Longitude = " + coordinates[1]);
     }
 }
 
