@@ -22,6 +22,7 @@ public class HomeController {
     PersonService personService;
 
 
+    // HOME PAGE
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("customers", personService.fetchAllCustomers());
@@ -30,6 +31,7 @@ public class HomeController {
         return "home/index";
     }
 
+    // CREATES
     @GetMapping("/createCustomer")
         public String createCustomerLink() {
             return "home/createCustomer";
@@ -43,6 +45,7 @@ public class HomeController {
         return "redirect:/viewAllCustomers";
     }
 
+    // VIEW ALLS
     @GetMapping("/viewAllCustomers")
     public String viewAllCustomers(Model model) {
         model.addAttribute("customers", personService.fetchAllCustomers());
@@ -50,6 +53,7 @@ public class HomeController {
         return "home/viewAllCustomers";
     }
 
+    // INSPECTS
     @GetMapping("/inspectPersonId={person_id}")
     public String inspectPerson(@PathVariable ("person_id") int id, Model model) {
         Person person = personService.fetchPersonById(id);
@@ -58,6 +62,7 @@ public class HomeController {
         return "home/inspectPerson";
     }
 
+    // UPDATES
     @GetMapping ("/updatePersonId={person_id}")
     public String updateCustomerButton(@PathVariable ("person_id") int id, Model model){
         Person person = personService.fetchPersonById(id);
