@@ -23,7 +23,7 @@ td {
 }
 
 .form-container table {
-    height: 500px;
+    height: 800px;
     width: 1050px;
     background:rgba(255,255,255,.1);
     text-align: center;
@@ -34,9 +34,8 @@ td {
     backdrop-filter: blur(10px);
     transform-style: preserve-3d; }
 
-
 .form-container form{
-    height: 500px;
+    height: 950px;
     width: 1050px;
     background:rgba(255,255,255,.1);
     text-align: center;

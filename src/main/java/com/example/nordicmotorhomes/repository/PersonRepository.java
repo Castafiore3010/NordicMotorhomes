@@ -6,6 +6,7 @@ import com.example.nordicmotorhomes.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -61,6 +62,15 @@ public class PersonRepository  {
                 +person.getPerson_role()+"')";
         template.update(person_sql);
         return null;
+    }
+
+    public Person fetchCustomerById(int id) {
+        String sql = "SELECT * from persons join addresses using (address_id) join zipcodes using (zipcode_id) " +
+                "join cities using (city_id) join countries using (country_id) WHERE person_id = ?";
+        RowMapper<Customer> personRowMapper = new BeanPropertyRowMapper<>(Customer.class);
+        Customer person = template.queryForObject(sql, personRowMapper, id);
+        return person;
+
     }
 
     // ID getter methods

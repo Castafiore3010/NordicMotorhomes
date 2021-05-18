@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.LinkedList;
@@ -47,5 +48,13 @@ public class HomeController {
         model.addAttribute("customers", personService.fetchAllCustomers());
 
         return "home/viewAllCustomers";
+    }
+
+    @GetMapping("/inspectPersonId={person_id}")
+    public String inspectPerson(@PathVariable ("person_id") int id, Model model) {
+        Person person = personService.fetchPersonById(id);
+        model.addAttribute("person", person);
+
+        return "home/inspectPerson";
     }
 }

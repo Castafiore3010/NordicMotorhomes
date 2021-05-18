@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="Index.css">
 </head>
 <body>
+<a th:href="@{'/'}">
+  <img src="Logo1.png" style="position: absolute; left: 0%; top: -8%;">
+</a>
 
 <div class ="form-container">
   <table class="searchTable">
@@ -26,7 +29,7 @@
       <div id="buttonBox">
         <td>
           <div id="knap1">
-            <a>
+            <a th:href="@{'/inspectPersonId='+${customer.person_id}}">
               <button class="btn-inspect">Inspect</button>
             </a>
           </div>

@@ -23,6 +23,9 @@ public class PersonService {
         return personRepository.fetchAllEmployees();
     }
 
+    public Person fetchPersonById(int id) {
+        return personRepository.fetchCustomerById(id);
+    }
 
     public Person createNewCustomer(Person person) {
         return personRepository.insertPerson(person);
