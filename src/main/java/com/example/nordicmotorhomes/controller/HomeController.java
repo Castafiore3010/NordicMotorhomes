@@ -78,4 +78,15 @@ public class HomeController {
         return "home/index";
     }
 
+    @GetMapping("/deletePersonId={person_id}")
+    public String deleteCustomer(@PathVariable ("person_id") int id, Model model) {
+        Person person = personService.fetchPersonById(id);
+        personService.deletePerson(id);
+        if (person.getPerson_type().equalsIgnoreCase("staff")) {
+            return "redirect:/viewAllEmployees";
+        } else {
+            return "redirect:/viewAllCustomers";
+        }
+    }
+
 }

@@ -93,6 +93,13 @@ public class PersonRepository  {
         return person;
     }
 
+    public Person deletePersonById(int id) {
+        String delete_sql = "DELETE FROM persons where person_id = " + id;
+        template.update(delete_sql);
+        return null;
+
+    }
+
     // ID getter methods
     //<editor-fold desc="ID-getters">
     public Integer countryIdByCountryName(String country_name) {
