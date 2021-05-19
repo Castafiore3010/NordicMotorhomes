@@ -6,12 +6,22 @@ body{
     position: relative;
 
 
+
 }
+
 
 td {
     text-align: center;
 
+
 }
+.searchTable tbody td {
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+
+}
+
+
 
 
 .form-container {
@@ -22,10 +32,21 @@ td {
     align-items: center;
 
 
+
 }
 
-.form-container table {
-    height: 800px;
+
+.searchTable thead th {
+    width: 250px;
+
+}
+.searchTable {
+    display: block;
+
+}
+
+.form-container table  {
+    height: 850px;
     width: 1050px;
     background:rgba(255,255,255,.1);
     text-align: center;
@@ -35,8 +56,12 @@ td {
     border-left: 1px solid rgba(255,255,255,.3);
     backdrop-filter: blur(10px);
     transform-style: preserve-3d;
-    overflow-y: auto;
-
+    overflow-y: scroll;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    left: 22.5%;
+    top: 115%;
 
 }
 
@@ -86,6 +111,8 @@ td {
 }
 
 
+
+
 .form-container form input[type="submit"]:hover{
     letter-spacing: 0.5px;
 
@@ -129,23 +156,12 @@ h4 {
     text-align: center;
     color: yellow;
 }
-.form-container table {
-    margin-left: auto;
-    margin-right: auto;
-    width: 1050px;
-    position: absolute;
-    left: 22.5%;
-    top: 115%;
 
-
-
-
-}
 .form-container table button {
-    width: 300px;
+    width: 200px;
     background:rgba(255,255,255,.1);
     backdrop-filter: blur(3px);
-    border: 4px solid orange;
+    border: 4px solid sandybrown;
     color: black;
     box-shadow: 0px 0px 0px rgba(0,170,255,.3) inset;
     font-kerning: none;
