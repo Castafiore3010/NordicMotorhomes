@@ -5,6 +5,7 @@ body{
     background-repeat: no-repeat;
     position: relative;
 
+
 }
 
 td {
@@ -20,7 +21,12 @@ td {
     alignment: center;
     align-items: center;
 
+
+
+
 }
+
+
 
 .form-container table {
     height: 500px;
@@ -32,7 +38,9 @@ td {
     border-top: 1px solid rgba(255,255,255,.3);
     border-left: 1px solid rgba(255,255,255,.3);
     backdrop-filter: blur(10px);
-    transform-style: preserve-3d; }
+    transform-style: preserve-3d;
+
+}
 
 
 .form-container form{
