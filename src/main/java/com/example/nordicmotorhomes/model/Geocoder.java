@@ -9,7 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.concurrent.CompletableFuture;
+
 // https://developer.here.com/blog/how-to-use-geocoding-in-java-with-the-here-geocoding-search-api
 public class Geocoder {
     private static final String GEOCODING_RESOURCE = "https://geocode.search.hereapi.com/v1/geocode";
@@ -30,7 +30,7 @@ public class Geocoder {
 
         return (String) geocodingResponse.body();
     }
-    public double[] getLatitudeFromStreetAdress(String fullAddress) throws IOException, InterruptedException{
+    public double[] getLatLngFromStreetAdress(String fullAddress) throws IOException, InterruptedException{
         // address example: 10 Burmeistersgade, København, 1429
         double[] coordinates = new double[2];
         ObjectMapper mapper = new ObjectMapper();
@@ -53,7 +53,7 @@ public class Geocoder {
     public static void main(String[] args) throws IOException, InterruptedException{
         Geocoder geocoder = new Geocoder();
 
-        double[] coordinates = geocoder.getLatitudeFromStreetAdress("Burmeistersgade 10, København, 1429");
+        double[] coordinates = geocoder.getLatLngFromStreetAdress("Burmeistersgade 10, København, 1429");
 
         System.out.println("Latitude = " + coordinates[0] + " Longitude = " + coordinates[1]);
     }
