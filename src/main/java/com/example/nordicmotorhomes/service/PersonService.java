@@ -23,8 +23,14 @@ public class PersonService {
         return personRepository.fetchAllEmployees();
     }
 
-    public Person fetchPersonById(int id) {
+    public Person fetchCustomerById(int id) {
+
         return personRepository.fetchCustomerById(id);
+    }
+
+    public Person fetchEmployeeById(int id) {
+
+        return personRepository.fetchEmployeeById(id);
     }
 
     public Person createNewPerson(Person person) {

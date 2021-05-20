@@ -2,7 +2,9 @@ package com.example.nordicmotorhomes.controller;
 
 import com.example.nordicmotorhomes.model.Customer;
 import com.example.nordicmotorhomes.model.Employee;
+import com.example.nordicmotorhomes.model.Motorhome;
 import com.example.nordicmotorhomes.model.Person;
+import com.example.nordicmotorhomes.service.MotorhomeService;
 import com.example.nordicmotorhomes.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ public class HomeController {
 
     @Autowired
     PersonService personService;
+    @Autowired
+    MotorhomeService motorhomeService;
 
 
     // HOME PAGE
@@ -75,19 +79,33 @@ public class HomeController {
         return "home/viewAllEmployees";
     }
 
+    @GetMapping("/viewAllMotorhomes")
+    public String viewAllMotorhomes(Model model) {
+        model.addAttribute("motorhomes", motorhomeService.fetchAllMotorhomes());
+        return "home/viewAllMotorhomes";
+    }
+
     // INSPECTS
     @GetMapping("/inspectPersonId={person_id}")
     public String inspectPerson(@PathVariable ("person_id") int id, Model model) {
-        Person person = personService.fetchPersonById(id);
+        Person person = personService.fetchCustomerById(id);
         model.addAttribute("person", person);
 
         return "home/inspectPerson";
     }
 
+    @GetMapping("/inspectMotorhomeId={motorhome_id}")
+    public String inspectMotorhome(@PathVariable ("motorhome_id") int id, Model model) {
+        Motorhome motorhome = motorhomeService.findMotorhomeById(id);
+        model.addAttribute("motorhome", motorhome);
+
+        return "home/inspectMotorhome";
+    }
+
     // UPDATES
     @GetMapping ("/updatePersonId={person_id}")
     public String updateCustomerButton(@PathVariable ("person_id") int id, Model model){
-        Person person = personService.fetchPersonById(id);
+        Person person = personService.fetchCustomerById(id);
         model.addAttribute("person",person);
         return "home/updatePerson";
     }
@@ -99,9 +117,23 @@ public class HomeController {
         return "home/index";
     }
 
+    @GetMapping ("/updateMotorhomeId={motorhome_id}")
+    public String updateMotorhomeButton(@PathVariable ("motorhome_id") int id, Model model) {
+        Motorhome motorhome = motorhomeService.findMotorhomeById(id);
+        model.addAttribute("motorhome", motorhome);
+        return "home/updateMotorhome";
+    }
+
+    @PostMapping("/updateMotorhome")
+    public String updateMotorhome(@ModelAttribute Motorhome motorhome, Model model){
+        model.addAttribute("motorhome", motorhome);
+        motorhomeService.updateMotorhome(motorhome);
+        return "home/index";
+    }
+
     @GetMapping("/deletePersonId={person_id}")
     public String deleteCustomer(@PathVariable ("person_id") int id, Model model) {
-        Person person = personService.fetchPersonById(id);
+        Person person = personService.fetchCustomerById(id);
         personService.deletePerson(id);
         if (person.getPerson_type().equalsIgnoreCase("staff")) {
             return "redirect:/viewAllEmployees";

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="InspectCustomer.css">
+</head>
+<body>
+
+<div class="form-container">
+  <form id="form" action="/viewAllMotorhomes" method="get">
+    <h3 class="gradient-text">Motorhome info</h3>
+    <label>ID</label>
+    <input type="text" th:placeholder="${motorhome.motorhome_id}" name="motorhome_id" th:value="${motorhome.motorhome_id}" disabled><br>
+    <label>Model</label>
+    <input type="text" th:placeholder="${motorhome.model_name}" name="model_name" th:value="${motorhome.model_name}" disabled> <br>
+    <label>Brand</label>
+    <input type="text" th:placeholder="${motorhome.brand_name}" name="brand_name" th:value="${motorhome.brand_name}" disabled> <br>
+    <label>Capacity</label>
+    <input type="text" th:placeholder="${motorhome.capacity}" name="capacity" th:value="${motorhome.capacity}" disabled> <br>
+    <label>Odometer</label>
+    <input type="text" th:placeholder="${motorhome.odometer}" name="odometer" th:value="${motorhome.odometer}" disabled><br>
+    <label>Price ID</label>
+    <input type="text" th:placeholder="${motorhome.price_id}" name="price_id" th:value="${motorhome.price_id}" disabled> <br>
+
+    <input type="submit" value="Return">
+
+  </form>
+</div>
+
+</body>
+</html>
