@@ -51,7 +51,9 @@ public class PersonRepository  {
         // addresses
         Integer zipcode_id = zipcodeIdByZipcode(person.getZipcode());
         String address_sql = "INSERT INTO addresses (street_name, zipcode_id) VALUES ('"+person.getStreet_name()+"','"+zipcode_id+"')";
-        template.update(address_sql);
+        if (addressExistsInZipcode(person.getStreet_name(), zipcode_id) < 1) {
+            template.update(address_sql);
+        }
 
 
         // persons
@@ -71,6 +73,14 @@ public class PersonRepository  {
         Customer person = template.queryForObject(sql, personRowMapper, id);
         return person;
 
+    }
+
+    public Person fetchEmployeeById(int id) {
+        String sql = "SELECT * from persons join addresses using (address_id) join zipcodes using (zipcode_id) " +
+                "join cities using (city_Id) join countries using (country_id) where person_id = ?";
+        RowMapper<Employee> personRowMapper = new BeanPropertyRowMapper<>(Employee.class);
+        Employee person = template.queryForObject(sql, personRowMapper, id);
+        return person;
     }
 
     public Person updatePerson(Person person){
@@ -121,7 +131,7 @@ public class PersonRepository  {
 
     }
 
-    public Integer addressIdByAddNameAndZipcodeId(String street_name, Integer zipcode_id) {
+    public Integer addressIdByAddNameAndZipcodeId(String street_name, int zipcode_id) {
         String sql = "SELECT address_id from addresses where street_name = ? and zipcode_id = ?";
         Integer address_id = template.queryForObject(sql, Integer.class,street_name, zipcode_id);
         return address_id;
@@ -149,6 +159,12 @@ public class PersonRepository  {
         return result;
     }
 
+    public Integer addressExistsInZipcode(String street_name, Integer zipcode_id) {
+        String sql = "SELECT count(*) from addresses join zipcodes using (zipcode_id)" +
+                " WHERE street_name = ? and zipcode_id = ?";
+        Integer result = template.queryForObject(sql, Integer.class, street_name, zipcode_id);
+        return result;
+    }
     //</editor-fold>  //
 
     // update other tables
