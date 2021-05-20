@@ -41,10 +41,25 @@ public class HomeController {
     @PostMapping("/createCustomer")
     public String createCustomer(@ModelAttribute Customer customer, Model model) {
         model.addAttribute("customer", customer);
-        personService.createNewCustomer(customer);
+        personService.createNewPerson(customer);
 
         return "redirect:/viewAllCustomers";
     }
+
+    @GetMapping("/createEmployee")
+    public String createEmployeeLink() {
+        return "home/createEmployee";
+    }
+
+
+    @PostMapping("/createEmployee")
+    public String createEmployee(@ModelAttribute Employee employee, Model model) {
+        model.addAttribute("employee", employee);
+        personService.createNewPerson(employee);
+
+        return "redirect:/viewAllEmployees";
+    }
+
 
     // VIEW ALLS
     @GetMapping("/viewAllCustomers")
@@ -52,6 +67,12 @@ public class HomeController {
         model.addAttribute("customers", personService.fetchAllCustomers());
 
         return "home/viewAllCustomers";
+    }
+
+    @GetMapping("/viewAllEmployees")
+    public String viewAllEmployees(Model model) {
+    model.addAttribute("employees",personService.fetchAllEmployees());
+        return "home/viewAllEmployees";
     }
 
     // INSPECTS

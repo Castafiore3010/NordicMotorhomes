@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="CreateCustomer.css">
+</head>
+<body>
+
+<div class="form-container">
+  <form id="form" action="/createEmployee" method="post">
+    <h3 class="gradient-text">Create Employee</h3>
+
+    <label>First name</label>
+    <input type="text" name="first_name" required> <br>
+    <label>Last name</label>
+    <input type="text"  name="last_name" required> <br>
+    <label>E-mail</label>
+    <input type="email" name="email" required> <br>
+    <label>Phone Number</label>
+    <input type="text" name="phoneNumber"> <br>
+    <label>Birthdate</label>
+    <input type="Date"  name="birthdate" required> <br>
+    <input type="hidden" name="person_type" value="staff">
+    <label>Role</label>
+    <input type="text" name="person_role" required> <br>
+    <label>Street Address</label>
+    <input type="text" name="street_name" required> <br>
+    <label>Zipcode</label>
+    <input type="text"  name="zipcode" required> <br>
+    <label>City</label>
+    <input type="text"  name="city_name" required> <br>
+    <label>Country</label>
+    <input type="text"  name="country_name" required> <br>
+    <input type="submit" value="Register">
+  </form>
+</div>
+
+</body>
+</html>

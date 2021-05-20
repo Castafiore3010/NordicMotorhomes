@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>View All Employees</title>
+    <link rel="stylesheet" href="ViewAll.css">
+
+</head>
+<body>
+<h1>View All Employees</h1>
+<a th:href="@{'/'}">
+    <img src="Logo1.png" style="position: absolute; left: 0%; top: -8%;">
+</a>
+<div class ="form-container">
+    <table class="searchTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full name</th>
+            <th>Email</th>
+            <th class="options">Options</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee: ${employees}">
+            <td th:text="${employee.person_id}"></td>
+            <td th:utext="${employee.first_name}+ ' ' +${employee.last_name}"></td>
+            <td th:text="${employee.email}"></td>
+            <div id="buttonBox" class="buttonBox">
+                <td style="border-right: none;">
+                    <div id="knap1">
+                        <a th:href="@{'/inspectPersonId='+${employee.person_id}}">
+                            <button class="btn-inspect">Inspect</button>
+                        </a>
+                    </div>
+                    <div id="knap2">
+                        <a th:href="@{'/updatePersonId='+${employee.person_id}}">
+                            <button class="btn-update">Update</button>
+                        </a>
+                    </div>
+
+                    <div id="knap3">
+                        <a th:href="@{'/deletePersonId='+${employee.person_id}}">
+                            <button class="btn-delete" onclick="alert('Successfully deleted the employee! :) You cant go back btw....')">Delete</button>
+                        </a>
+                    </div>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+</body>
+</html>

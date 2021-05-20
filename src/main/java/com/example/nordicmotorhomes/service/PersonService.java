@@ -27,7 +27,7 @@ public class PersonService {
         return personRepository.fetchCustomerById(id);
     }
 
-    public Person createNewCustomer(Person person) {
+    public Person createNewPerson(Person person) {
         return personRepository.insertPerson(person);
     }
 
