@@ -6,6 +6,7 @@ import com.example.nordicmotorhomes.model.Motorhome;
 import com.example.nordicmotorhomes.model.Person;
 import com.example.nordicmotorhomes.service.MotorhomeService;
 import com.example.nordicmotorhomes.service.PersonService;
+import com.example.nordicmotorhomes.service.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,8 @@ public class HomeController {
     PersonService personService;
     @Autowired
     MotorhomeService motorhomeService;
+    @Autowired
+    RentalContractService rentalContractService;
 
 
     // HOME PAGE
@@ -93,6 +96,12 @@ public class HomeController {
     public String viewAllMotorhomes(Model model) {
         model.addAttribute("motorhomes", motorhomeService.fetchAllMotorhomes());
         return "home/viewAllMotorhomes";
+    }
+
+    @GetMapping("/viewAllRentalContracts")
+    public String viewAllRentalContracts(Model model) {
+        model.addAttribute("rentalContracts", rentalContractService.fetchAllRentalContracts());
+        return "home/viewAllRentalContracts";
     }
 
     // INSPECTS
