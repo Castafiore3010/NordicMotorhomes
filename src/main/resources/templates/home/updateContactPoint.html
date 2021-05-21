@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="InspectCustomer.css">
+</head>
+<body>
+
+<div class="form-container">
+  <form id="form" action="/updateContactPoint" method="post">
+    <h3 class="gradient-text">Contact point info</h3>
+    <label>ID</label>
+    <input type="text" th:placeholder="${contactPoint.contact_point_id}" name="contact_point_id" th:value="${contactPoint.contact_point_id}" readonly><br>
+    <label>Contact point name</label>
+    <input type="text" th:placeholder="${contactPoint.contact_point_name}" name="contact_point_name" th:value="${contactPoint.contact_point_name}" > <br>
+    <label>Valid location</label>
+    <input type="text" th:placeholder="${contactPoint.contact_point_type}" name="contact_point_type" th:value="${contactPoint.contact_point_type}" readonly> <br>
+    <label>Address</label>
+    <input type="text" th:placeholder="${contactPoint.street_name}" name="street_name" th:value="${contactPoint.street_name}" disabled> <br>
+    <label>Zipcode</label>
+    <input type="text" th:placeholder="${contactPoint.zipcode}" name="zipcode" th:value="${contactPoint.zipcode}" disabled><br>
+    <label>City</label>
+    <input type="text" th:placeholder="${contactPoint.city_name}" name="city_name" th:value="${contactPoint.city_name}" disabled> <br>
+
+    <input type="submit" value="Return">
+
+  </form>
+</div>
+
+</body>
+</html>

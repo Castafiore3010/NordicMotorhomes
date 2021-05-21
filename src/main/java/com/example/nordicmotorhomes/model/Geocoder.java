@@ -13,17 +13,17 @@ import java.time.Duration;
 // https://developer.here.com/blog/how-to-use-geocoding-in-java-with-the-here-geocoding-search-api
 public class Geocoder {
     private static final String GEOCODING_RESOURCE = "https://geocode.search.hereapi.com/v1/geocode";
-    private static final String API_KEY = "0fmrNuQW_jTem2z45dF5tYOil5Der6BxJdVbTDXOuww";
+    private static final String API_KEY = "I9Vw4VKW8x0PGkQqh8FqSeQcos01iuSbV4ALe3icc3k"; //Update API
 
     public String GeocodeSync(String query) throws IOException, InterruptedException {
 
         HttpClient httpClient = HttpClient.newHttpClient();
 
-        String encodedQuery = URLEncoder.encode(query,"UTF-8");
+        String encodedQuery = URLEncoder.encode(query,"UTF-8"); //Encryption?
         String requestUri = GEOCODING_RESOURCE + "?apiKey=" + API_KEY + "&q=" + encodedQuery;
 
-        HttpRequest geocodingRequest = HttpRequest.newBuilder().GET().uri(URI.create(requestUri))
-                .timeout(Duration.ofMillis(2000)).build();
+        HttpRequest geocodingRequest = HttpRequest.newBuilder().GET().uri(URI.create(requestUri)) //Ved ikke
+                .timeout(Duration.ofMillis(2000)).build(); //Hvis den ikke får svar, så smider den interupt-exception
 
         HttpResponse geocodingResponse = httpClient.send(geocodingRequest,
                 HttpResponse.BodyHandlers.ofString());
@@ -33,7 +33,7 @@ public class Geocoder {
     public double[] getLatLngFromStreetAdress(String fullAddress) throws IOException, InterruptedException{
         // address example: 10 Burmeistersgade, København, 1429
         double[] coordinates = new double[2];
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper(); //Rowmapper?
         Geocoder geocoder = new Geocoder();
 
         String response = geocoder.GeocodeSync(fullAddress);
@@ -53,7 +53,7 @@ public class Geocoder {
     public static void main(String[] args) throws IOException, InterruptedException{
         Geocoder geocoder = new Geocoder();
 
-        double[] coordinates = geocoder.getLatLngFromStreetAdress("10 Burmeistersgade, København, 1429");
+        double[] coordinates = geocoder.getLatLngFromStreetAdress("C.T Barfoedsvej 4, Frederiksberg, 2000");
 
         System.out.println("Latitude = " + coordinates[0] + " Longitude = " + coordinates[1]);
     }

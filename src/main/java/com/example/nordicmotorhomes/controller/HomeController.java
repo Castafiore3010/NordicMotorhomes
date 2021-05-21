@@ -1,9 +1,7 @@
 package com.example.nordicmotorhomes.controller;
 
-import com.example.nordicmotorhomes.model.Customer;
-import com.example.nordicmotorhomes.model.Employee;
-import com.example.nordicmotorhomes.model.Motorhome;
-import com.example.nordicmotorhomes.model.Person;
+import com.example.nordicmotorhomes.model.*;
+import com.example.nordicmotorhomes.service.ContactPointService;
 import com.example.nordicmotorhomes.service.MotorhomeService;
 import com.example.nordicmotorhomes.service.PersonService;
 import com.example.nordicmotorhomes.service.RentalContractService;
@@ -28,6 +26,8 @@ public class HomeController {
     MotorhomeService motorhomeService;
     @Autowired
     RentalContractService rentalContractService;
+    @Autowired
+    ContactPointService contactPointService;
 
 
     // HOME PAGE
@@ -120,6 +120,12 @@ public class HomeController {
 
         return "home/inspectMotorhome";
     }
+    @GetMapping("/inspectRentalContractId={rental_contract_id}")
+    public String inspectRentalContract(@PathVariable ("rental_contract_id")int id, Model model){
+        RentalContract rentalContract = rentalContractService.findContractById(id);
+        model.addAttribute("rentalContract",rentalContract);
+        return "home/inspectRentalContract";
+    }
 
     // UPDATES
     @GetMapping ("/updatePersonId={person_id}")
@@ -150,9 +156,43 @@ public class HomeController {
         return "home/index";
     }
 
+    @GetMapping("/updateRentalContractId={rental_contract_id}")
+    public String updateRentalContractButton(@PathVariable("rental_contract_id")int id, Model model){
+        RentalContract rentalContract = rentalContractService.findContractById(id);
+        model.addAttribute("rentalContract",rentalContract);
+        return "home/updateRentalContract";
+    }
+
+
+    @PostMapping ("/updateRentalContract")
+    public String updateRentalContract(@ModelAttribute RentalContract rentalContract, Model model){
+    model.addAttribute("rentalContract",rentalContract);
+    rentalContractService.updateRentalContract(rentalContract);
+
+    return "redirect:/viewAllRentalContracts";
+
+    }
+
+    @GetMapping ("/updateContactPointId={contact_point_id}")
+    public String updateContactPointButton(@PathVariable("contact_point_id")int id , Model model){
+        ContactPoint contactPoint = contactPointService.findContactPointById(id);
+        model.addAttribute("contactPoint",contactPoint);
+
+        return "home/updateContactPoint";
+    }
+
+    @PostMapping ("/updateContactPoint")
+    public String updateContactPoint(@ModelAttribute ContactPoint contactPoint, Model model){
+        model.addAttribute("contactPoint",contactPoint);
+        contactPointService.updateContactPoint(contactPoint);
+
+        return "redirect:/viewAllRentalContracts";
+    }
+
+
     // DELETES
     @GetMapping("/deletePersonId={person_id}")
-    public String deleteCustomer(@PathVariable ("person_id") int id, Model model) {
+    public String deleteCustomer(@PathVariable ("person_id") int id) {
         Person person = personService.fetchCustomerById(id);
         personService.deletePerson(id);
         if (person.getPerson_type().equalsIgnoreCase("staff")) {
@@ -162,9 +202,17 @@ public class HomeController {
         }
     }
     @GetMapping("/deleteMotorhomeId={motorhome_id}")
-    public String deleteMotorhome(@PathVariable ("motorhome_id") int id, Model model) {
+    public String deleteMotorhome(@PathVariable ("motorhome_id") int id) {
         motorhomeService.deleteMotorhome(id);
         return "redirect:/viewAllMotorhomes";
     }
+
+    @GetMapping("/deleteRentalContractId={rental_contract_id}")
+    public String deleteRentalContract(@PathVariable("rental_contract_id")int id){
+        rentalContractService.deleteRentalContractById(id);
+        return "redirect:/viewAllRentalContracts";
+    }
+
+
 
 }

@@ -9,7 +9,11 @@ public class ContactPoint {
     private int contact_point_id;
     private double latitude, longitude;
     private String contact_point_name;
-    private boolean validLocation;
+    private String contact_point_type;
+    private int address_id;
+    private String street_name;
+    private String zipcode;
+    private String city_name;
 
 
 
@@ -17,12 +21,18 @@ public class ContactPoint {
 
 
 
-    public ContactPoint(int contactPoint_id, double latitude, double longitude, String contact_point_name, boolean validLocation) {
+    public ContactPoint(int contactPoint_id, double latitude, double longitude,
+                        String contact_point_name, String contact_point_type, int address_id,
+                        String street_name, String zipcode, String city_name) {
         this.contact_point_id = contactPoint_id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.contact_point_name = contact_point_name;
-        this.validLocation = validLocation;
+        this.contact_point_type = contact_point_type;
+        this.address_id = address_id;
+        this.street_name=street_name;
+        this.zipcode=zipcode;
+        this.city_name=city_name;
     }
 
 
@@ -58,13 +68,46 @@ public class ContactPoint {
         this.contact_point_name = contactPoint_name;
     }
 
-    public boolean isValidLocation() {
-        return validLocation;
+    public String getContact_point_type() {
+        return contact_point_type;
     }
 
-    public void setValidLocation(boolean validLocation) {
-        this.validLocation = validLocation;
+    public void setContact_point_type(String validLocation) {
+        this.contact_point_type = validLocation;
     }
+
+    public int getAddress_id() {
+        return address_id;
+    }
+
+    public void setAddress_id(int address_id) {
+        this.address_id = address_id;
+    }
+
+    public String getStreet_name() {
+        return street_name;
+    }
+
+    public void setStreet_name(String street_name) {
+        this.street_name = street_name;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
+
 
 
     // return distance between this location and that location

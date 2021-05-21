@@ -15,4 +15,17 @@ public class RentalContractService {
 
 
     public List<RentalContract> fetchAllRentalContracts() { return rentalContractRepository.fetchAllRentalContracts(); }
+
+    public RentalContract findContractById(int id){
+        return rentalContractRepository.findContractById(id);
+    }
+
+    public RentalContract deleteRentalContractById(int id){
+        return rentalContractRepository.deleteRentalContractById(id);
+    }
+
+    public RentalContract updateRentalContract (RentalContract rentalContract){
+        return rentalContractRepository.updateRentalContract(rentalContract);
+    }
+
 }

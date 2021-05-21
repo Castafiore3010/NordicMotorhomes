@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="InspectCustomer.css">
+    <style>
+        #pickupUpdate{
+            position: absolute;
+            left: 61%;
+            top: 39%;
+        }
+        #dropoffUpdate{
+            position: absolute;
+            left: 61%;
+            top: 44%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <form id="form" action="/updateRentalContract" method="post">
+        <h3 class="gradient-text">Rental Contract info</h3>
+        <label>Motorhome ID</label>
+        <input type="text" th:placeholder="${rentalContract.motorhome_id}" name="motorhome_id" th:value="${rentalContract.motorhome_id}" readonly><br>
+        <label>Person ID</label>
+        <input type="text" th:placeholder="${rentalContract.person_id}" name="person_id" th:value="${rentalContract.person_id}" readonly> <br>
+        <label>Contract ID</label>
+        <input type="text" th:placeholder="${rentalContract.rental_contract_id}" name="rental_contract_id" th:value="${rentalContract.rental_contract_id}" readonly> <br>
+        <label>Start date</label>
+        <input type="datetime-local" th:placeholder="${rentalContract.start_datetime}" name="start_datetime" th:value="${rentalContract.start_datetime}"> <br>
+        <label>End date</label>
+        <input type="datetime-local" th:placeholder="${rentalContract.end_datetime}" name="end_datetime" th:value="${rentalContract.end_datetime}" ><br>
+        <label>Pickup ID</label>
+        <input type="text" th:placeholder="${rentalContract.contact_point_pickup_id}" name="contact_point_pickup_id" th:value="${rentalContract.contact_point_pickup_id}" ><br>
+        <label>Dropoff ID</label>
+        <input type="text" th:placeholder="${rentalContract.contact_point_dropoff_id}" name="contact_point_dropoff_id" th:value="${rentalContract.contact_point_dropoff_id}" ><br>
+
+        <input type="hidden" th:placeholder="${rentalContract.pickup_name}" name="pickup_name" th:value="${rentalContract.pickup_name}" >
+        <input type="hidden" th:placeholder="${rentalContract.pickup_type}" name="pickup_type" th:value="${rentalContract.pickup_type}"  >
+        <input type="hidden" th:placeholder="${rentalContract.dropoff_name}" name="dropoff_name" th:value="${rentalContract.dropoff_name}">
+        <input type="hidden" th:placeholder="${rentalContract.dropoff_type}" name="dropoff_type" th:value="${rentalContract.dropoff_type}" >
+
+        <label>First name</label>
+        <input type="text" th:placeholder="${rentalContract.first_name}" name="first_name" th:value="${rentalContract.first_name}" readonly><br>
+        <label>Last name</label>
+        <input type="text" th:placeholder="${rentalContract.last_name}" name="last_name" th:value="${rentalContract.last_name}"readonly ><br>
+        <label>Email</label>
+        <input type="text" th:placeholder="${rentalContract.email}" name="email" th:value="${rentalContract.email}" readonly><br>
+        <label>Phonenumber</label>
+        <input type="text" th:placeholder="${rentalContract.phonenumber}" name="phonenumber" th:value="${rentalContract.phonenumber}" readonly><br>
+        <label>Model name</label>
+        <input type="text" th:placeholder="${rentalContract.model_name}" name="model_name" th:value="${rentalContract.model_name}"readonly><br>
+        <label>Brand name</label>
+        <input type="text" th:placeholder="${rentalContract.brand_name}" name="brand_name" th:value="${rentalContract.brand_name}"readonly><br>
+        <label>Capacity</label>
+        <input type="text" th:placeholder="${rentalContract.capacity}" name="capacity" th:value="${rentalContract.capacity}" readonly><br>
+        <label>Price ID</label>
+        <input type="text" th:placeholder="${rentalContract.price_id}" name="price_id" th:value="${rentalContract.price_id}" readonly><br>
+
+        <input type="submit" value="Return">
+
+
+    </form>
+    <div id="pickupUpdate">
+    <a id="" th:href="@{'/updateContactPointId='+${rentalContract.contact_point_pickup_id}}"><button>Update PICK UP</button></a>
+    </div>
+    <div id="dropoffUpdate">
+    <a th:href="@{'/updateContactPointId='+${rentalContract.contact_point_dropoff_id}}"><button>Update Dropoff</button></a>
+    </div>
+</div>
+
+</body>
+</html>
