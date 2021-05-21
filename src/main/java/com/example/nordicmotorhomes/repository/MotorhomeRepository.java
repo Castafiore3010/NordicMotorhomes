@@ -14,17 +14,17 @@ public class MotorhomeRepository {
     @Autowired
     JdbcTemplate template;
 
-public List<Motorhome> fetchAllMotorhomes () {
-    return template.query("SELECT * FROM motorhomes", new BeanPropertyRowMapper<>(Motorhome.class));
-}
+    public List<Motorhome> fetchAllMotorhomes () {
+        return template.query("SELECT * FROM motorhomes", new BeanPropertyRowMapper<>(Motorhome.class));
+    }
 
-public Motorhome findMotorhomeById(int id) {
-    String sql = "SELECT * FROM motorhomes WHERE motorhome_id = ?";
-    RowMapper<Motorhome> motorhomeRowMapper = new BeanPropertyRowMapper<>(Motorhome.class);
-    return template.queryForObject(sql, motorhomeRowMapper, id);
-}
+    public Motorhome findMotorhomeById(int id) {
+        String sql = "SELECT * FROM motorhomes WHERE motorhome_id = ?";
+        RowMapper<Motorhome> motorhomeRowMapper = new BeanPropertyRowMapper<>(Motorhome.class);
+        return template.queryForObject(sql, motorhomeRowMapper, id);
+    }
 
-    public Motorhome updateMotorhome (Motorhome motorhome){
+    public Motorhome updateMotorhome(Motorhome motorhome){
 
         String motorhomes_sql = "UPDATE motorhomes SET "+
                 " model_name='"+motorhome.getModel_name()+"',"+
@@ -34,6 +34,19 @@ public Motorhome findMotorhomeById(int id) {
                 " price_id='"+motorhome.getPrice_id()+"'" +
                 " WHERE motorhome_id = "+ motorhome.getMotorhome_id();
         template.update(motorhomes_sql);
+        return null;
+    }
+
+    public Motorhome deleteMotorhome(int id) {
+        String delete_sql = "DELETE from motorhomes where motorhome_id = ?";
+        template.update(delete_sql, id);
+        return null;
+
+    }
+
+    public Motorhome insertMotorhome(Motorhome motorhome) {
+        String insert_sql = "INSERT INTO motorhomes (model_name, brand_name, capacity, odometer, price_id) VALUES (?,?,?,?,?)";
+        template.update(insert_sql, motorhome.getModel_name(), motorhome.getBrand_name(), motorhome.getCapacity(), motorhome.getOdometer(), motorhome.getPrice_id());
         return null;
     }
 

@@ -64,6 +64,16 @@ public class HomeController {
         return "redirect:/viewAllEmployees";
     }
 
+    @GetMapping("/createMotorhome")
+    public String createMotorhomeLink(){return "home/createMotorhome";}
+
+    @PostMapping("/createMotorhome")
+    public String createMotorhome(@ModelAttribute Motorhome motorhome, Model model) {
+        model.addAttribute("motorhome", motorhome);
+        motorhomeService.insertMotorhome(motorhome);
+        return "redirect:/viewAllMotorhomes";
+    }
+
 
     // VIEW ALLS
     @GetMapping("/viewAllCustomers")
@@ -131,6 +141,7 @@ public class HomeController {
         return "home/index";
     }
 
+    // DELETES
     @GetMapping("/deletePersonId={person_id}")
     public String deleteCustomer(@PathVariable ("person_id") int id, Model model) {
         Person person = personService.fetchCustomerById(id);
@@ -140,6 +151,11 @@ public class HomeController {
         } else {
             return "redirect:/viewAllCustomers";
         }
+    }
+    @GetMapping("/deleteMotorhomeId={motorhome_id}")
+    public String deleteMotorhome(@PathVariable ("motorhome_id") int id, Model model) {
+        motorhomeService.deleteMotorhome(id);
+        return "redirect:/viewAllMotorhomes";
     }
 
 }

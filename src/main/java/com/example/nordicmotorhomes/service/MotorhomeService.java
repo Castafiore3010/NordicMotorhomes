@@ -12,16 +12,20 @@ public class MotorhomeService {
     @Autowired
     MotorhomeRepository motorhomeRepository;
 
-public List<Motorhome> fetchAllMotorhomes () {
-    return motorhomeRepository.fetchAllMotorhomes();
-}
+    public List<Motorhome> fetchAllMotorhomes () {
+        return motorhomeRepository.fetchAllMotorhomes();
+    }
 
-public Motorhome findMotorhomeById(int id) {
-    return motorhomeRepository.findMotorhomeById(id);
-}
+    public Motorhome findMotorhomeById(int id) {
+        return motorhomeRepository.findMotorhomeById(id);
+    }
 
-public Motorhome updateMotorhome(Motorhome motorhome) {
-    return motorhomeRepository.updateMotorhome(motorhome);
-}
+    public Motorhome updateMotorhome(Motorhome motorhome) {
+        return motorhomeRepository.updateMotorhome(motorhome);
+    }
+
+    public Motorhome deleteMotorhome(int id) { return motorhomeRepository.deleteMotorhome(id);}
+
+    public Motorhome insertMotorhome(Motorhome motorhome) {return motorhomeRepository.insertMotorhome(motorhome);}
 
 }

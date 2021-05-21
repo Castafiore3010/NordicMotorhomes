@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="InspectCustomer.css">
+</head>
+<body>
+
+<div class="form-container">
+  <form id="form" action="/createMotorhome" method="post">
+    <h3 class="gradient-text">Motorhome info</h3>
+    <label>Model</label>
+    <input type="text" name="model_name" required> <br>
+    <label>Brand</label>
+    <input type="text"  name="brand_name" required> <br>
+    <label>Capacity</label>
+    <input type="text" name="capacity" required> <br>
+    <label>Odometer</label>
+    <input type="text" name="odometer" required><br>
+    <label>Price ID</label>
+    <input type="text" name="price_id"  required> <br>
+
+    <input type="submit" value="Create">
+
+  </form>
+</div>
+
+</body>
+</html>
