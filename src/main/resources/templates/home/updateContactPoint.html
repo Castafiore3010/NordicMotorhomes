@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <link rel="stylesheet" href="InspectCustomer.css">
+  <link rel="stylesheet" href="../InspectCustomer.css">
 </head>
 <body>
 
@@ -17,13 +17,18 @@
     <label>Valid location</label>
     <input type="text" th:placeholder="${contactPoint.contact_point_type}" name="contact_point_type" th:value="${contactPoint.contact_point_type}" readonly> <br>
     <label>Address</label>
-    <input type="text" th:placeholder="${contactPoint.street_name}" name="street_name" th:value="${contactPoint.street_name}" disabled> <br>
+    <input type="text" th:placeholder="${contactPoint.street_name}" name="street_name" th:value="${contactPoint.street_name}"> <br>
     <label>Zipcode</label>
-    <input type="text" th:placeholder="${contactPoint.zipcode}" name="zipcode" th:value="${contactPoint.zipcode}" disabled><br>
+    <input type="text" th:placeholder="${contactPoint.zipcode}" name="zipcode" th:value="${contactPoint.zipcode}"><br>
     <label>City</label>
-    <input type="text" th:placeholder="${contactPoint.city_name}" name="city_name" th:value="${contactPoint.city_name}" disabled> <br>
+    <input type="text" th:placeholder="${contactPoint.city_name}" name="city_name" th:value="${contactPoint.city_name}"> <br>
 
-    <input type="submit" value="Return">
+    <input type="hidden" name="address_id" th:value="${contactPoint.address_id}" readonly>
+
+    <input type="hidden" name="rental_contract_id" th:value="${rentalContract.rental_contract_id}" readonly>
+
+    <input type="submit" value="Apply">
+
 
   </form>
 </div>

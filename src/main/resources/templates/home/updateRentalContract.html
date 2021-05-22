@@ -34,9 +34,9 @@
         <label>End date</label>
         <input type="datetime-local" th:placeholder="${rentalContract.end_datetime}" name="end_datetime" th:value="${rentalContract.end_datetime}" ><br>
         <label>Pickup ID</label>
-        <input type="text" th:placeholder="${rentalContract.contact_point_pickup_id}" name="contact_point_pickup_id" th:value="${rentalContract.contact_point_pickup_id}" ><br>
+        <input type="text" th:placeholder="${rentalContract.contact_point_pickup_id}" name="contact_point_pickup_id" th:value="${rentalContract.contact_point_pickup_id}" readonly><br>
         <label>Dropoff ID</label>
-        <input type="text" th:placeholder="${rentalContract.contact_point_dropoff_id}" name="contact_point_dropoff_id" th:value="${rentalContract.contact_point_dropoff_id}" ><br>
+        <input type="text" th:placeholder="${rentalContract.contact_point_dropoff_id}" name="contact_point_dropoff_id" th:value="${rentalContract.contact_point_dropoff_id}" readonly ><br>
 
         <input type="hidden" th:placeholder="${rentalContract.pickup_name}" name="pickup_name" th:value="${rentalContract.pickup_name}" >
         <input type="hidden" th:placeholder="${rentalContract.pickup_type}" name="pickup_type" th:value="${rentalContract.pickup_type}"  >
@@ -65,7 +65,7 @@
 
     </form>
     <div id="pickupUpdate">
-    <a id="" th:href="@{'/updateContactPointId='+${rentalContract.contact_point_pickup_id}}"><button>Update PICK UP</button></a>
+    <a id="" th:href="@{'/updateContactPointId='+${rentalContract.contact_point_pickup_id}+'/'+${rentalContract.rental_contract_id}}"><button>Update PICK UP</button></a>
     </div>
     <div id="dropoffUpdate">
     <a th:href="@{'/updateContactPointId='+${rentalContract.contact_point_dropoff_id}}"><button>Update Dropoff</button></a>

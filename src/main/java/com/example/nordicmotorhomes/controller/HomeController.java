@@ -8,13 +8,8 @@ import com.example.nordicmotorhomes.service.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -173,20 +168,30 @@ public class HomeController {
 
     }
 
-    @GetMapping ("/updateContactPointId={contact_point_id}")
-    public String updateContactPointButton(@PathVariable("contact_point_id")int id , Model model){
+    @GetMapping("/updateContactPointId={contact_point_id}/{rental_contract_id}")
+    public String updateContactPointButton(@PathVariable ("rental_contract_id") int rental_contract_id, @PathVariable("contact_point_id")int id, Model model){
         ContactPoint contactPoint = contactPointService.findContactPointById(id);
+        RentalContract rentalContract = rentalContractService.findContractById(rental_contract_id);
         model.addAttribute("contactPoint",contactPoint);
+        model.addAttribute("rentalContract", rentalContract);
 
         return "home/updateContactPoint";
     }
 
-    @PostMapping ("/updateContactPoint")
-    public String updateContactPoint(@ModelAttribute ContactPoint contactPoint, Model model){
-        model.addAttribute("contactPoint",contactPoint);
-        contactPointService.updateContactPoint(contactPoint);
+    @PostMapping("/updateContactPoint")
+    public String updateContactPoint(@ModelAttribute ContactPointHelp contactPointHelp, Model model){ // Help object
 
-        return "redirect:/viewAllRentalContracts";
+        ContactPoint contactPoint = new ContactPoint(contactPointHelp.getContact_point_id(),
+                contactPointHelp.getContact_point_name(), contactPointHelp.getContact_point_type(),
+                contactPointHelp.getStreet_name(),contactPointHelp.getZipcode(),
+                contactPointHelp.getCity_name(), contactPointHelp.getAddress_id());
+        contactPointService.updateContactPoint(contactPoint);
+        contactPoint = contactPointService.findContactPointById(contactPoint.getContact_point_id());
+        model.addAttribute("contactPoint", contactPoint);
+        int id = contactPointHelp.getRental_contract_id();
+
+        return "redirect:/updateRentalContractId="+id;
+
     }
 
 

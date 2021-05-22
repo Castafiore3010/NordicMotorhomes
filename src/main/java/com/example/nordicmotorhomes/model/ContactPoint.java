@@ -35,6 +35,15 @@ public class ContactPoint {
         this.city_name=city_name;
     }
 
+    public ContactPoint(int contact_point_id, String contact_point_name, String contact_point_type, String street_name, String zipcode, String city_name, int address_id) {
+        this.contact_point_id = contact_point_id;
+        this.contact_point_name = contact_point_name;
+        this.contact_point_type = contact_point_type;
+        this.street_name = street_name;
+        this.zipcode = zipcode;
+        this.city_name = city_name;
+        this.address_id = address_id;
+    }
 
     public int getContact_point_id() {
         return contact_point_id;
