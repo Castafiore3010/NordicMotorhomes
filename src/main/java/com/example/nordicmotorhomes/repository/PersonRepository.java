@@ -22,7 +22,7 @@ public class PersonRepository  {
     }
 
     public List<Employee> fetchAllEmployees() {
-        return template.query("SELECT * FROM persons where person_type = 'staff'", new BeanPropertyRowMapper<>(Employee.class));
+        return template.query("SELECT * FROM persons where person_type = 'employee'", new BeanPropertyRowMapper<>(Employee.class));
     }
 
     public Person insertPerson(Person person) {
