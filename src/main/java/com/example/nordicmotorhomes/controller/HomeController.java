@@ -148,7 +148,7 @@ public class HomeController {
     public String updateMotorhome(@ModelAttribute Motorhome motorhome, Model model){
         model.addAttribute("motorhome", motorhome);
         motorhomeService.updateMotorhome(motorhome);
-        return "home/index";
+        return "redirect:/viewAllMotorhomes";
     }
 
     @GetMapping("/updateRentalContractId={rental_contract_id}")
