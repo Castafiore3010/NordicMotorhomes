@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 public class HomeController {
@@ -70,6 +72,26 @@ public class HomeController {
         model.addAttribute("motorhome", motorhome);
         motorhomeService.insertMotorhome(motorhome);
         return "redirect:/viewAllMotorhomes";
+    }
+
+    @GetMapping("/createRentalContract")
+    public String createRentalContractLink(Model model) {
+        List<Customer> customers = personService.fetchAllCustomers();
+        model.addAttribute("customers", customers);
+        List<Motorhome> motorhomes = motorhomeService.fetchAllMotorhomes();
+        model.addAttribute("motorhomes", motorhomes);
+        List<ContactPoint> contactPoints = contactPointService.fetchAllContactPoints();
+        model.addAttribute("contact_points", contactPoints);
+
+        return "home/createRentalContract";
+    }
+
+    @PostMapping("/createRentalContract")
+    public String createRentalContract(@ModelAttribute InsertRentalContract rentalContract, Model model) {
+        model.addAttribute("rentalContract", rentalContract);
+        System.out.println(rentalContract.getStart_datetime() + ", " +rentalContract.getEnd_datetime()+ ", " + rentalContract.getPerson_id()+ ", "+ rentalContract.getMotorhome_id()+ ", " + rentalContract.getPickup_id()+ ", " + rentalContract.getDropoff_id());
+        rentalContractService.insertRentalContract(rentalContract);
+        return "redirect:/viewAllRentalContracts";
     }
 
 

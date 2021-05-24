@@ -2,6 +2,7 @@ package com.example.nordicmotorhomes.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,6 +30,15 @@ public class RentalContract {
     // private List<Extras> accessoryList; // liste af extra objekter.
 
     public RentalContract() {}
+
+    public RentalContract(LocalDateTime start_datetime, LocalDateTime end_datetime, int person_id, int motorhome_id, int contact_point_pickup_id, int contact_point_dropoff_id) {
+        this.start_datetime = start_datetime;
+        this.end_datetime = end_datetime;
+        this.person_id = person_id;
+        this.motorhome_id = motorhome_id;
+        this.contact_point_pickup_id = contact_point_pickup_id;
+        this.contact_point_dropoff_id = contact_point_dropoff_id;
+    }
 
 
     public RentalContract(int motorhome_id, int person_id, int rental_contract_id, LocalDateTime start_datetime,

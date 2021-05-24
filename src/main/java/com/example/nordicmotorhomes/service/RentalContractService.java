@@ -1,5 +1,6 @@
 package com.example.nordicmotorhomes.service;
 
+import com.example.nordicmotorhomes.model.InsertRentalContract;
 import com.example.nordicmotorhomes.model.RentalContract;
 import com.example.nordicmotorhomes.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,6 @@ public class RentalContractService {
     public RentalContract updateRentalContract (RentalContract rentalContract){
         return rentalContractRepository.updateRentalContract(rentalContract);
     }
+    public RentalContract insertRentalContract(InsertRentalContract rentalContract) { return rentalContractRepository.insertRentalContract(rentalContract);}
 
 }

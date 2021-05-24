@@ -10,11 +10,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.util.List;
 
 @Repository
 public class ContactPointRepository {
     @Autowired
     JdbcTemplate template;
+
+    public List<ContactPoint> fetchAllContactPoints() {
+        return template.query("SELECT * from contact_points", new BeanPropertyRowMapper<>(ContactPoint.class));
+    }
 
     public ContactPoint updateContactPoint(ContactPoint contactPoint){
         Geocoder geocoder = new Geocoder();

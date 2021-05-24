@@ -1,5 +1,7 @@
 package com.example.nordicmotorhomes.repository;
+import com.example.nordicmotorhomes.model.InsertRentalContract;
 import com.example.nordicmotorhomes.model.RentalContract;
+import org.hibernate.sql.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -60,6 +62,16 @@ public class RentalContractRepository {
         template.update(update_sql);
 
     return null;
+    }
+
+    public RentalContract insertRentalContract(InsertRentalContract rentalContract) {
+        String insert_sql = "INSERT INTO rental_contracts (start_datetime, end_datetime, person_id, motorhome_id, " +
+                "contact_point_pickup_id, contact_point_dropoff_id) VALUES (?,?,?,?,?,?)";
+        template.update(insert_sql, rentalContract.getStart_datetime(), rentalContract.getEnd_datetime(),
+                rentalContract.getPerson_id(), rentalContract.getMotorhome_id(), rentalContract.getPickup_id(),
+                rentalContract.getDropoff_id());
+
+        return null;
     }
 
 
