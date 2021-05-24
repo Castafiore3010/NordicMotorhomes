@@ -20,22 +20,22 @@
     <label>End</label>
     <input type="datetime-local"  name="end_datetime" required> <br>
     <label for="person">Person</label>
-    <select th:field="${customers}"  style="width: 27%; height: 40px;" id="person" required><br>
+    <select name="person_id"  style="width: 27%; height: 40px;" id="person" required><br>
       <option th:each="customer : ${customers}" th:value="${customer.person_id}" th:utext="${customer.person_id}+' : '+${customer.first_name}+' '+${customer.last_name}">
       </option>
     </select> <br>
     <label for="motorhome">Motorhome</label>
-    <select th:field="${motorhomes}" style="width:27%; height: 40px;" id="motorhome" required><br>
+    <select name="motorhome_id" style="width:27%; height: 40px;" id="motorhome" required><br>
       <option th:each="motorhome : ${motorhomes}" th:value="${motorhome.motorhome_id}" th:utext="${motorhome.motorhome_id}+' : '+${motorhome.brand_name}+' : '+${motorhome.model_name}">
       </option>
     </select> <br>
     <label for="pickup">Pickup</label>
-    <select th:field="${contact_points}"  style="width: 27%;height: 40px;" id="pickup" required> <br>
+    <select name="pickup_id"  style="width: 27%;height: 40px;" id="pickup" required> <br>
       <option th:each="contact_point : ${contact_points}"  th:value="${contact_point.contact_point_id}" th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
       </option>
     </select> <br>
     <label for="dropoff">Dropoff</label>
-    <select th:field="${contact_points}" style="width: 27%;height: 40px;" id="dropoff" required><br>
+    <select name="dropoff_id" style="width: 27%;height: 40px;" id="dropoff" required><br>
       <option th:each="contact_point : ${contact_points}" th:value="${contact_point.contact_point_id}"  th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
       </option>
     </select> <br>
