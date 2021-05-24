@@ -97,6 +97,19 @@ public class HomeController {
     }
 
 
+    /*
+    @PostMapping("/bookMotorhome")
+    public String searchMotorhome(@ModelAttribute SearchResult searchResult, Model model) {
+        model.addAttribute("searchResult", searchResult);
+        List<Motorhome> motorhomes = motorhomeService.fetchAllMotorhomes();
+
+
+        return "home/bookingPage";
+    }
+
+     */
+
+
     @GetMapping("/createRentalContract")
     public String createRentalContractLink(Model model) {
         List<Customer> customers = personService.fetchAllCustomers();

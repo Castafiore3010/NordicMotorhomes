@@ -14,11 +14,11 @@ td {
     text-align: center;
 
 
+
 }
 .searchTable tbody td {
     border-bottom: 2px solid black;
     border-right: 2px solid black;
-
 }
 
 
@@ -34,6 +34,7 @@ td {
 
 
 }
+
 
 
 .searchTable thead th {
@@ -62,6 +63,7 @@ td {
     position: absolute;
     left: 22.5%;
     top: 115%;
+
 
 }
 
