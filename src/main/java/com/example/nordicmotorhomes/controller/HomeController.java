@@ -50,6 +50,18 @@ public class HomeController {
         return "redirect:/viewAllCustomers";
     }
 
+    @GetMapping("/createCustomerFromContract")
+    public String createCustomerFromContractButton() {
+        return "home/createCustomerFromContract";
+    }
+
+    @PostMapping("/createCustomerFromContract")
+    public String createCustomerFromContract(@ModelAttribute Customer customer, Model model){
+        model.addAttribute("customer", customer);
+        personService.createNewPerson(customer);
+        return "redirect:/createRentalContract";
+    }
+
     @GetMapping("/createEmployee")
     public String createEmployeeLink() {
         return "home/createEmployee";
@@ -74,6 +86,17 @@ public class HomeController {
         return "redirect:/viewAllMotorhomes";
     }
 
+    @GetMapping("/createMotorhomeFromContract")
+    public String createMotorhomeButton() {return "home/createMotorhomeFromContract";}
+
+    @PostMapping("/createMotorhomeFromContract")
+    public String createMotorhomeFromContract(@ModelAttribute Motorhome motorhome, Model model) {
+        model.addAttribute("motorhome", motorhome);
+        motorhomeService.insertMotorhome(motorhome);
+        return "redirect:/createRentalContract";
+    }
+
+
     @GetMapping("/createRentalContract")
     public String createRentalContractLink(Model model) {
         List<Customer> customers = personService.fetchAllCustomers();
@@ -89,7 +112,6 @@ public class HomeController {
     @PostMapping("/createRentalContract")
     public String createRentalContract(@ModelAttribute InsertRentalContract rentalContract, Model model) {
         model.addAttribute("rentalContract", rentalContract);
-        System.out.println(rentalContract.getStart_datetime() + ", " +rentalContract.getEnd_datetime()+ ", " + rentalContract.getPerson_id()+ ", "+ rentalContract.getMotorhome_id()+ ", " + rentalContract.getPickup_id()+ ", " + rentalContract.getDropoff_id());
         rentalContractService.insertRentalContract(rentalContract);
         return "redirect:/viewAllRentalContracts";
     }

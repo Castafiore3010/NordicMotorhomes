@@ -5,6 +5,16 @@
   <title>Title</title>
   <link rel="stylesheet" href="InspectCustomer.css">
   <style>
+    #CreateNewPerson {
+      position:absolute;
+      left: 61%;
+      top: 26%;
+    }
+    #CreateNewMotorhome {
+      position: absolute;
+      left: 61%;
+      top: 30%;
+    }
     select {
 
     }
@@ -42,6 +52,12 @@
     <input type="submit" value="Create">
 
   </form>
+</div>
+<div id="CreateNewPerson">
+  <a id="personLink" th:href="@{'/createCustomerFromContract'}"><button>Create Person</button></a>
+</div>
+<div id="CreateNewMotorhome">
+  <a id="MotorhomeLink" th:href="@{'/createMotorhomeFromContract'}"><button>Create Motorhome</button></a>
 </div>
 
 </body>
