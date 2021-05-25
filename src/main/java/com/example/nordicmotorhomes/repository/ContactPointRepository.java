@@ -91,21 +91,5 @@ public class ContactPointRepository {
 
 
 
-    public ContactPoint closestValidPoint(ContactPoint initialPoint) {
-        List<ContactPoint> validPoints = fetchAllValidContactPoints();
-        int id = -1;
-        double shortestDistance = initialPoint.distanceTo(validPoints.get(0));
 
-        for (ContactPoint contactPoint : validPoints) {
-            if (contactPoint.distanceTo(initialPoint) < shortestDistance) {
-                shortestDistance = contactPoint.distanceTo(initialPoint);
-                id = contactPoint.getContact_point_id();
-            }
-        }
-
-        return validPoints.get(id);
-
-
-
-    }
 }

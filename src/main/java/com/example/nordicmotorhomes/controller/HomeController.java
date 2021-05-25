@@ -190,7 +190,12 @@ public class HomeController {
     public String updatePerson(@ModelAttribute Customer person, Model model){
         model.addAttribute("person",person);
         personService.updatePerson(person);
-        return "home/index";
+        if (person.getPerson_type().equalsIgnoreCase("employee")) {
+            return "redirect:/viewAllEmployees";
+        } else {
+            return "redirect:/viewAllCustomers";
+        }
+
     }
 
     @GetMapping ("/updateMotorhomeId={motorhome_id}")
