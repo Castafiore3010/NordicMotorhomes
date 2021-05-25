@@ -1,11 +1,13 @@
 package com.example.nordicmotorhomes.service;
 
 import com.example.nordicmotorhomes.model.InsertRentalContract;
+import com.example.nordicmotorhomes.model.Motorhome;
 import com.example.nordicmotorhomes.model.RentalContract;
 import com.example.nordicmotorhomes.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -32,4 +34,5 @@ public class RentalContractService {
     }
     public RentalContract insertRentalContract(InsertRentalContract rentalContract) { return rentalContractRepository.insertRentalContract(rentalContract);}
 
+    public boolean motorhomeInContractInPeriod(Motorhome motorhome, LocalDateTime start_datetime, LocalDateTime end_datetime) { return rentalContractRepository.motorhomeInContractInPeriod(motorhome, start_datetime, end_datetime);}
 }

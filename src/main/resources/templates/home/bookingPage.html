@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>View All Motorhomes</title>
+  <link rel="stylesheet" href="ViewAll.css">
+<style>
+  #knap1 {
+    padding: 8px;
+  }
+  #knap2 {
+    padding: 8px;
+  }
+  #knap3 {
+    padding: 8px;
+  }
+</style>
 </head>
 <body>
+<h1>Available motorhomes</h1>
+<a th:href="@{'/'}">
+  <img src="Logo1.png" style="position: absolute; left: 0%; top: -8%;">
+</a>
+<div class ="form-container">
+  <table class="searchTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Model name</th>
+      <th>Brand name</th>
+      <th>Price ID</th>
+      <th class="options">Options</th>
+      <th>Appearance</th>
+
+    </tr>
+    </thead>
+    <tbody>
+      <tr th:each="motorhome: ${motorhomes}">
+        <td th:text="${motorhome.motorhome_id}"></td>
+        <td th:text="${motorhome.model_name}"></td>
+        <td th:text="${motorhome.brand_name}"></td>
+        <td th:text="${motorhome.price_id}"></td>
+
+        <div id="buttonBox" class="buttonBox">
+          <td style="border-right: none;">
+            <div id="knap1">
+              <a href="#">
+                <button class="btn-inspect">Book now</button>
+              </a>
+            </div>
+          </td>
+        </div>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
 
 
 

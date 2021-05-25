@@ -1,5 +1,6 @@
 package com.example.nordicmotorhomes.repository;
 import com.example.nordicmotorhomes.model.InsertRentalContract;
+import com.example.nordicmotorhomes.model.Motorhome;
 import com.example.nordicmotorhomes.model.RentalContract;
 import org.hibernate.sql.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,19 @@ public class RentalContractRepository {
 
         return finishedContracts;
 
+    }
+
+    public boolean motorhomeInContractInPeriod(Motorhome motorhome, LocalDateTime start_datetime, LocalDateTime end_datetime) {
+        String check_sql = "SELECT count(*) from rental_contracts WHERE motorhome_id = "+motorhome.getMotorhome_id() +
+                " and ((start_datetime between '" + start_datetime +"' and '"+end_datetime+"')" +
+                " or" +
+                " (end_datetime between '" + start_datetime+"' and '" + end_datetime+"'))";
+
+        boolean inContract;
+
+        inContract = template.queryForObject(check_sql, Integer.class) > 0;
+
+        return inContract;
     }
 
     public List<RentalContract> fetchAllRentalContracts() {

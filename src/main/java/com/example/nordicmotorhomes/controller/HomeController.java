@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -96,17 +97,25 @@ public class HomeController {
     }
 
 
-    /*
+
     @PostMapping("/bookMotorhome")
     public String searchMotorhome(@ModelAttribute SearchResult searchResult, Model model) {
         model.addAttribute("searchResult", searchResult);
         List<Motorhome> motorhomes = motorhomeService.fetchAllMotorhomes();
+        List<Motorhome> availableMotorhomes = new ArrayList<>();
 
+        for (Motorhome motorhome : motorhomes) {
+            if (motorhome.getCapacity() >= searchResult.getCapacity() &&
+                    !rentalContractService.motorhomeInContractInPeriod(motorhome, searchResult.getStart_datetime(), searchResult.getEnd_datetime())) {
+                availableMotorhomes.add(motorhome);
+            }
+        }
+        model.addAttribute("motorhomes", availableMotorhomes);
 
         return "home/bookingPage";
     }
 
-     */
+
 
 
     @GetMapping("/createRentalContract")
