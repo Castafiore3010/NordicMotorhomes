@@ -17,6 +17,8 @@ public class RentalContractService {
 
     public List<RentalContract> fetchAllRentalContracts() { return rentalContractRepository.fetchAllRentalContracts(); }
 
+    public List<RentalContract> fetchAllFinishedRentalContracts() { return rentalContractRepository.fetchAllFinishedRentalContracts(); }
+
     public RentalContract findContractById(int id){
         return rentalContractRepository.findContractById(id);
     }

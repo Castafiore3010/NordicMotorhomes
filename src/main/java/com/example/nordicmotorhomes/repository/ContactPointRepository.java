@@ -21,6 +21,10 @@ public class ContactPointRepository {
         return template.query("SELECT * from contact_points", new BeanPropertyRowMapper<>(ContactPoint.class));
     }
 
+    public List<ContactPoint> fetchAllValidContactPoints() {
+        return template.query("SELECT * FROM contact_points where contact_point_type = 'valid'", new BeanPropertyRowMapper<>(ContactPoint.class));
+    }
+
     public ContactPoint updateContactPoint(ContactPoint contactPoint){
         Geocoder geocoder = new Geocoder();
         String fullAddress = contactPoint.getStreet_name() + ", " + contactPoint.getCity_name() + ", " + contactPoint.getZipcode();
@@ -85,4 +89,23 @@ public class ContactPointRepository {
     }
     //</editor-fold>
 
+
+
+    public ContactPoint closestValidPoint(ContactPoint initialPoint) {
+        List<ContactPoint> validPoints = fetchAllValidContactPoints();
+        int id = -1;
+        double shortestDistance = initialPoint.distanceTo(validPoints.get(0));
+
+        for (ContactPoint contactPoint : validPoints) {
+            if (contactPoint.distanceTo(initialPoint) < shortestDistance) {
+                shortestDistance = contactPoint.distanceTo(initialPoint);
+                id = contactPoint.getContact_point_id();
+            }
+        }
+
+        return validPoints.get(id);
+
+
+
+    }
 }

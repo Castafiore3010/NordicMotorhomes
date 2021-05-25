@@ -137,4 +137,6 @@ public class ContactPoint {
         double kilometers = KILOMETERS_PER_NAUTICAL_MILE * nauticalMiles;
         return kilometers;
     }
+
+
 }

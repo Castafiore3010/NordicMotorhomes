@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -15,6 +17,21 @@ public class RentalContractRepository {
     @Autowired
     JdbcTemplate template;
 
+
+    public List<RentalContract> fetchAllFinishedRentalContracts() {
+        LocalDateTime now = LocalDateTime.now();
+        List<RentalContract> rentalContracts = fetchAllRentalContracts();
+        List<RentalContract> finishedContracts = new ArrayList<>();
+
+        for (RentalContract rentalContract : rentalContracts) {
+            if (rentalContract.getEnd_datetime().isBefore(now)) {
+                finishedContracts.add(rentalContract);
+            }
+        }
+
+        return finishedContracts;
+
+    }
 
     public List<RentalContract> fetchAllRentalContracts() {
         String fetch = "SELECT motorhome_id, person_id, rental_contract_id, start_datetime, end_datetime," +

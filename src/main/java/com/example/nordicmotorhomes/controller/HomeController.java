@@ -1,10 +1,7 @@
 package com.example.nordicmotorhomes.controller;
 
 import com.example.nordicmotorhomes.model.*;
-import com.example.nordicmotorhomes.service.ContactPointService;
-import com.example.nordicmotorhomes.service.MotorhomeService;
-import com.example.nordicmotorhomes.service.PersonService;
-import com.example.nordicmotorhomes.service.RentalContractService;
+import com.example.nordicmotorhomes.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +22,8 @@ public class HomeController {
     RentalContractService rentalContractService;
     @Autowired
     ContactPointService contactPointService;
+    @Autowired
+    PriceService priceService;
 
 
     // HOME PAGE
