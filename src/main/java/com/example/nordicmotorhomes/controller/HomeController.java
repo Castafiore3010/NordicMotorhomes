@@ -162,9 +162,9 @@ public class HomeController {
                 ioException.printStackTrace();
             }
             String[] address = fullAddressPickup.split(",");
-            String street_address = address[0];
-            String zipcode = address[1];
-            String city_name = address[2];
+            String street_address = address[0].trim();
+            String zipcode = address[1].trim();
+            String city_name = address[2].trim();
             ContactPoint contactPoint = new ContactPoint(coordinates[0], coordinates[1], street_address, zipcode, city_name);
             contactPointService.insertContactPoint(contactPoint);
             pickUp_id = contactPointService.contactPointIdByLatAndlng(coordinates);
