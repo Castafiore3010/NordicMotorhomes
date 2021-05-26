@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +116,113 @@ public class HomeController {
 
         return "home/bookingPage";
     }
+
+    @GetMapping("/bookMotorhomeId={motorhome_id}/{start}/{end}")
+    public String bookNowButton(@PathVariable ("motorhome_id") int id, @PathVariable ("start") LocalDateTime start, @PathVariable ("end") LocalDateTime end, Model model) {
+
+        Motorhome motorhome = motorhomeService.findMotorhomeById(id);
+
+        model.addAttribute("motorhome", motorhome);
+        List<ContactPoint> validPoints = contactPointService.fetchAllValidContactPoints();
+        model.addAttribute("contact_points", validPoints);
+        String other = "Specify Other";
+        model.addAttribute("other", other);
+        SearchResult searchResult = new SearchResult(start, end, motorhome.getCapacity());
+        model.addAttribute(searchResult);
+
+
+        return "home/confirmBooking";
+
+    }
+
+    @PostMapping("/confirmBooking")
+    public String confirmBooking(@ModelAttribute bookingDetails bookingDetails, Model model) {
+        model.addAttribute("bookingDetails", bookingDetails);
+        Person customer = new Customer(bookingDetails.getPerson_first_name(), bookingDetails.getPerson_last_name(),
+                bookingDetails.getPerson_email(), bookingDetails.getPerson_phone(), bookingDetails.getPerson_birthdate(),
+                "customer", "", bookingDetails.getStreet_address(), bookingDetails.getZipcode(),
+                bookingDetails.getCity_name(), bookingDetails.getCountry());
+
+
+        personService.createNewPerson(customer);
+        int person_id = personService.personIdByEmail(customer.getEmail());
+        int motorhome_id = bookingDetails.getMotorhome_id();
+        int pickUp_id = bookingDetails.getPickUp_id();
+        int dropOff_id = bookingDetails.getDropOff_id();
+
+        if (bookingDetails.getPickUp_id() == 0) {
+            String fullAddressPickup = bookingDetails.getFullAddress_pickup();
+            Geocoder geocoder = new Geocoder();
+            double[] coordinates = new double[2];
+            try {
+                 coordinates = geocoder.getLatLngFromStreetAdress(fullAddressPickup);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            String[] address = fullAddressPickup.split(",");
+            String street_address = address[0];
+            String zipcode = address[1];
+            String city_name = address[2];
+            ContactPoint contactPoint = new ContactPoint(coordinates[0], coordinates[1], street_address, zipcode, city_name);
+            contactPointService.insertContactPoint(contactPoint);
+            pickUp_id = contactPointService.contactPointIdByLatAndlng(coordinates);
+
+        }
+        if (bookingDetails.getDropOff_id() == 0) {
+            String fullAddressDropoff = bookingDetails.getFullAddress_dropoff();
+            Geocoder geocoder = new Geocoder();
+            double[] coordinates = new double[2];
+            try {
+                coordinates = geocoder.getLatLngFromStreetAdress(fullAddressDropoff);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            String[] address = fullAddressDropoff.split(",");
+            String street_address = address[0].trim();
+            String zipcode = address[1].trim();
+            String city_name = address[2].trim();
+            ContactPoint contactPoint = new ContactPoint(coordinates[0], coordinates[1], street_address, zipcode, city_name);
+            contactPointService.insertContactPoint(contactPoint);
+            dropOff_id = contactPointService.contactPointIdByLatAndlng(coordinates);
+
+        }
+        InsertRentalContract rentalContract = new InsertRentalContract(bookingDetails.getStart(), bookingDetails.getEnd(), person_id, motorhome_id, pickUp_id, dropOff_id);
+        rentalContractService.insertRentalContract(rentalContract);
+        Motorhome motorhome = motorhomeService.findMotorhomeById(motorhome_id);
+        int price_id = motorhome.getPrice_id();
+        Price price = priceService.findPriceById(price_id);
+        int rental_contract_id = rentalContractService.rentalContractIdByStartEndPersonIdMotorhomeId(rentalContract);
+        RentalContract rentalContractLong = rentalContractService.findContractById(rental_contract_id);
+        model.addAttribute("rentalContract", rentalContractLong);
+        ContactPoint cpPickUp = contactPointService.findContactPointById(pickUp_id);
+        ContactPoint cpDropOff = contactPointService.findContactPointById(dropOff_id);
+        List<ContactPoint> validPoints = contactPointService.fetchAllValidContactPoints();
+        Calculator calculator = new Calculator(rentalContractLong, price, cpPickUp, cpDropOff, validPoints);
+
+        double motorhomeCost = calculator.calculateMotorhomePriceForPeriod();
+        String motorhomeCost1 = String.format("%.2f €", motorhomeCost);
+        model.addAttribute("motorhomeCost", motorhomeCost1);
+
+        double totalCost = calculator.calculateTotalContractPrice();
+        String totalCost1 = String.format("%.2f €", totalCost);
+        model.addAttribute("totalPrice", totalCost1);
+        double transferCost = totalCost - motorhomeCost;
+        String transferCost1 = String.format("%.2f €", transferCost);
+        model.addAttribute("transferCost", transferCost1);
+
+        return "home/bookingConfirmed";
+
+
+
+
+
+
+    }
+
 
 
 

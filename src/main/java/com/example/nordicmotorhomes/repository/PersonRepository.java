@@ -133,8 +133,15 @@ public class PersonRepository  {
 
     public Integer addressIdByAddNameAndZipcodeId(String street_name, int zipcode_id) {
         String sql = "SELECT address_id from addresses where street_name = ? and zipcode_id = ?";
-        Integer address_id = template.queryForObject(sql, Integer.class,street_name, zipcode_id);
+        Integer address_id = template.queryForObject(sql, Integer.class, street_name, zipcode_id);
         return address_id;
+    }
+
+    public Integer personIdByEmail(String email) {
+        String sql = "SELECT person_id from persons where email = ?";
+        Integer person_id = template.queryForObject(sql, Integer.class, email);
+        return person_id;
+
     }
     //</editor-fold>
 

@@ -12,6 +12,7 @@ public class Calculator {
 
 
 
+
     public Calculator(RentalContract rentalContract, Price price, ContactPoint pickUp, ContactPoint dropOff, List<ContactPoint> validPoints) {
         this.rentalContract = rentalContract;
         this.pickUp = pickUp;
@@ -55,42 +56,55 @@ public class Calculator {
 
 
 
+
+
     public double calculateMotorhomePriceForPeriod() {
         Period contractPeriod = Period.between(rentalContract.getStart_datetime().toLocalDate(), rentalContract.getEnd_datetime().toLocalDate());
 
-        return MOTORHOME_PRICE_PER_DAY * contractPeriod.getDays();
+
+
+        return  MOTORHOME_PRICE_PER_DAY * contractPeriod.getDays();
 
     }
 
     public double calculateTransferCost(double distance) {
         int roundedDistance = (int) distance;
         double transferCostPerKilometer = 0.70;
+
         return roundedDistance * transferCostPerKilometer;
 
     }
 
     public ContactPoint closestValidPoint(ContactPoint initialPoint) {
         int id = -1;
-        double shortestDistance = initialPoint.distanceTo(validPoints.get(0));
+        double shortestDistance = 10000;
+        System.out.println("INITIAL POINT : " + initialPoint.getContact_point_name());
 
         for (ContactPoint contactPoint : validPoints) {
-            if (contactPoint.distanceTo(initialPoint) < shortestDistance) {
+            System.out.println(contactPoint.getContact_point_name());
+            System.out.println(shortestDistance);
+            if (contactPoint.distanceTo(initialPoint) <= shortestDistance) {
                 shortestDistance = contactPoint.distanceTo(initialPoint);
+                System.out.println(shortestDistance);
                 id = contactPoint.getContact_point_id();
+                System.out.println(id);
             }
         }
 
-        return validPoints.get(id);
+        System.out.println("CLOSEST ID: " + id);
+        return validPoints.get(id -1);
 
 
 
     }
 
     public double calculateTotalContractPrice() {
-        double motorhomeTotalPriceForPeriod = calculateMotorhomePriceForPeriod();
+        double motorhomeTotalPriceForPeriod = (calculateMotorhomePriceForPeriod());
+
 
         double distanceToClosestPickUp = pickUp.distanceTo(closestValidPoint(pickUp));
         double distanceToClosestDropOff = dropOff.distanceTo(closestValidPoint(dropOff));
+
 
         double transferCostPickUp = calculateTransferCost(distanceToClosestPickUp);
         double transferCostDropOff = calculateTransferCost(distanceToClosestDropOff);

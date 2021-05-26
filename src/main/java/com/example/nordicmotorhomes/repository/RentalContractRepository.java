@@ -105,5 +105,10 @@ public class RentalContractRepository {
         return null;
     }
 
+    public Integer rentalContractIdByStartEndPersonIdMotorhomeId(InsertRentalContract rentalContract) {
+        String sql = "SELECT rental_contract_id from rental_contracts WHERE start_datetime = ? and end_datetime = ? and person_id = ? and motorhome_id = ?";
+        return template.queryForObject(sql,Integer.class, rentalContract.getStart_datetime().toString(),
+                rentalContract.getEnd_datetime().toString(), rentalContract.getPerson_id(), rentalContract.getMotorhome_id());
+    }
 
 }

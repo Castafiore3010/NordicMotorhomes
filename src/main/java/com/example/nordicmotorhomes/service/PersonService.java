@@ -32,6 +32,7 @@ public class PersonService {
 
         return personRepository.fetchEmployeeById(id);
     }
+    public Integer personIdByEmail(String email) { return personRepository.personIdByEmail(email);}
 
     public Person createNewPerson(Person person) {
         return personRepository.insertPerson(person);

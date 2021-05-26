@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/inspectCustomer.css}">
+  <style>
+    #CreateNewPerson {
+      position:absolute;
+      left: 61%;
+      top: 26%;
+    }
+    #CreateNewMotorhome {
+      position: absolute;
+      left: 61%;
+      top: 30%;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <form id="form" action="/confirmBooking" method="post">
+    <h3 class="gradient-text">RentalContract info</h3>
+    <label>Start</label>
+    <input type="datetime-local" th:value="${searchResult.start_datetime}" name="start" readonly> <br>
+    <label>End</label>
+    <input type="datetime-local" th:value="${searchResult.end_datetime}" name="end" readonly> <br>
+    <input type="hidden" th:value="${motorhome.motorhome_id}" name="motorhome_id">
+    <label>First name</label>
+    <input type="text" name="person_first_name" required><br>
+    <label>Last name</label>
+    <input type="text" name="person_last_name" required><br>
+    <label>E-mail</label>
+    <input type="text" name="person_email" required><br>
+    <label>Phone</label>
+    <input type="text" name="person_phone" required><br>
+    <label>Birthdate</label>
+    <input type="date" name="person_birthdate" required><br>
+    <label>Street</label>
+    <input type="text" name="street_address" required><br>
+    <label>Zipcode</label>
+    <input type="text" name="zipcode" required><br>
+    <label>City</label>
+    <input type="text" name="city_name" required><br>
+    <label>Country</label>
+    <input type="text" name="country" required><br>
+    </select> <br>
+    <label for="pickup">Pickup</label>
+    <select name="pickUp_id"  style="width: 27%;height: 40px;" id="pickup" required> <br>
+      <option th:each="contact_point : ${contact_points}"  th:value="${contact_point.contact_point_id}" th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
+      </option>
+      <option th:value="0" th:utext="${other}">
+      </option>
+    </select> <br>
+    <label for="dropoff">Dropoff</label>
+    <select name="dropOff_id" style="width: 27%;height: 40px;" id="dropoff" required><br>
+      <option th:each="contact_point : ${contact_points}" th:value="${contact_point.contact_point_id}"  th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
+      </option>
+      <option th:value="0" th:utext="${other}">
+      </option>
+    </select> <br>
+    <label>Specify pickup</label>
+    <input type="text" name="fullAddress_pickup" placeholder="e.g. Nørrebrogade 150, 2200, København N" style="font-size: 12px;"> <br>
+    <label>Specify dropoff</label>
+    <input type="text" name="fullAddress_dropoff" placeholder="e.g. Toftegårds allé 41, 2500, Valby" style="font-size: 12px;"> <br>
+    <input type="submit" value="Book">
+
+  </form>
+</div>
+
+</body>
+</html>

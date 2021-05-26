@@ -15,9 +15,15 @@ public class ContactPointService {
 
     public List<ContactPoint> fetchAllContactPoints() {return contactPointRepository.fetchAllContactPoints();}
 
+    public List<ContactPoint> fetchAllValidContactPoints() {return contactPointRepository.fetchAllValidContactPoints(); }
+
     public ContactPoint updateContactPoint(ContactPoint contactPoint){
         return contactPointRepository.updateContactPoint(contactPoint);
     }
+    public ContactPoint insertContactPoint(ContactPoint contactPoint) {
+        return contactPointRepository.insertContactPoint(contactPoint);
+    }
+    public Integer contactPointIdByLatAndlng(double[] coordinates) { return contactPointRepository.contactPointIdByLatAndLng(coordinates); }
 
     public ContactPoint findContactPointById(int id){
         return contactPointRepository.findContactPointById(id);

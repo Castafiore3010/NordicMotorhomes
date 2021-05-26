@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="InspectCustomer.css">
+  <style>
+  .form-container form{
+    height: 1040px ;
+  }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <form id="form" action="/" method="get">
+    <h3 class="gradient-text">Motorhome info</h3>
+    <label>Start date</label>
+    <input type="datetime-local" th:placeholder="${rentalContract.start_datetime}" name="start_datetime" th:value="${rentalContract.start_datetime}" disabled> <br>
+    <label>End date</label>
+    <input type="datetime-local" th:placeholder="${rentalContract.end_datetime}" name="end_datetime" th:value="${rentalContract.end_datetime}" disabled><br>
+    <label>Pickup location</label>
+    <input type="text" th:placeholder="${rentalContract.pickup_name}" name="pickup_name" th:value="${rentalContract.pickup_name}" disabled> <br>
+    <label>Dropoff location</label>
+    <input type="text" th:placeholder="${rentalContract.dropoff_name}" name="dropoff_name" th:value="${rentalContract.dropoff_name}" disabled><br>
+    <label>First name</label>
+    <input type="text" th:placeholder="${rentalContract.first_name}" name="first_name" th:value="${rentalContract.first_name}" disabled><br>
+    <label>Last name</label>
+    <input type="text" th:placeholder="${rentalContract.last_name}" name="last_name" th:value="${rentalContract.last_name}" disabled><br>
+    <label>Email</label>
+    <input type="text" th:placeholder="${rentalContract.email}" name="email" th:value="${rentalContract.email}" disabled><br>
+    <label>Phonenumber</label>
+    <input type="text" th:placeholder="${rentalContract.phonenumber}" name="phonenumber" th:value="${rentalContract.phonenumber}" disabled><br>
+    <label>Model name</label>
+    <input type="text" th:placeholder="${rentalContract.model_name}" name="model_name" th:value="${rentalContract.model_name}" disabled><br>
+    <label>Brand name</label>
+    <input type="text" th:placeholder="${rentalContract.brand_name}" name="brand_name" th:value="${rentalContract.brand_name}" disabled><br>
+    <label>Capacity</label>
+    <input type="text" th:placeholder="${rentalContract.capacity}" name="capacity" th:value="${rentalContract.capacity}" disabled><br>
+    <label>MH cost</label>
+    <input type="text" name="MH_cost" th:value="${motorhomeCost}" disabled><br>
+    <label>Transfer cost</label>
+    <input type="text" name="transferCost" th:value="${transferCost}" disabled><br>
+    <label>Total price</label>
+    <input type="text"  name="total_price" th:value="${totalPrice}" disabled><br>
+
+    <input type="submit" value="Complete">
+
+  </form>
+</div>
+
+</body>
+</html>

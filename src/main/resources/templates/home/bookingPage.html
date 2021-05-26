@@ -28,7 +28,7 @@
       <th>ID</th>
       <th>Model name</th>
       <th>Brand name</th>
-      <th>Price ID</th>
+      <th>Capacity</th>
       <th class="options">Options</th>
       <th>Appearance</th>
 
@@ -39,12 +39,12 @@
         <td th:text="${motorhome.motorhome_id}"></td>
         <td th:text="${motorhome.model_name}"></td>
         <td th:text="${motorhome.brand_name}"></td>
-        <td th:text="${motorhome.price_id}"></td>
+        <td th:text="${motorhome.capacity}"></td>
 
         <div id="buttonBox" class="buttonBox">
           <td style="border-right: none;">
             <div id="knap1">
-              <a href="#">
+              <a th:href="@{'/bookMotorhomeId='+${motorhome.motorhome_id}+'/'+${searchResult.start_datetime}+'/'+${searchResult.end_datetime}}">
                 <button class="btn-inspect">Book now</button>
               </a>
             </div>

@@ -19,6 +19,14 @@ public class ContactPoint {
 
     public ContactPoint() {}
 
+    public ContactPoint(double latitude, double longitude, String street_name, String zipcode, String city_name) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.street_name = street_name;
+        this.zipcode = zipcode;
+        this.city_name = city_name;
+    }
+
 
 
     public ContactPoint(int contactPoint_id, double latitude, double longitude,

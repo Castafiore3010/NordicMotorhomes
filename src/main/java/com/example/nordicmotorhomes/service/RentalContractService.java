@@ -29,6 +29,8 @@ public class RentalContractService {
         return rentalContractRepository.deleteRentalContractById(id);
     }
 
+    public Integer rentalContractIdByStartEndPersonIdMotorhomeId(InsertRentalContract rentalContract) {return rentalContractRepository.rentalContractIdByStartEndPersonIdMotorhomeId(rentalContract);}
+
     public RentalContract updateRentalContract (RentalContract rentalContract){
         return rentalContractRepository.updateRentalContract(rentalContract);
     }
