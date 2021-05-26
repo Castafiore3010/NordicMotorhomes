@@ -128,7 +128,7 @@ public class HomeController {
         String other = "Specify Other";
         model.addAttribute("other", other);
         SearchResult searchResult = new SearchResult(start, end, motorhome.getCapacity());
-        model.addAttribute(searchResult);
+        model.addAttribute("searchResult", searchResult);
 
 
         return "home/confirmBooking";
