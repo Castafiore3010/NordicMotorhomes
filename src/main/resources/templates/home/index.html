@@ -11,66 +11,6 @@
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIs>+ywDW>CvqsWgccV3gFoRBv0z+8dLJgyAHIhr35VZc2oM/gI1w=="
           crossorigin="anonymous">
 
-    <script>
-        function initMap() {
-            geocoder = new google.maps.Geocoder();
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 7,
-                center: { lat: 55.65646, lng: 11.30698 },
-            });
-            // Set LatLng and title text for the markers. The first marker (Boynton Pass)
-            // receives the initial focus when tab is pressed. Use arrow keys to
-            // move between markers; press tab again to cycle through the map controls.
-            const tourStops = [
-                [{ lat: 55.61819, lng: 12.65075 }, "Copenhagen Airport"],
-                [{ lat: 34.8559195, lng: -111.7988186 }, "Airport Mesa"],
-                [{ lat: 34.832149, lng: -111.7695277 }, "Chapel of the Holy Cross"],
-                [{ lat: 34.823736, lng: -111.8001857 }, "Red Rock Crossing"],
-                [{ lat: 34.800326, lng: -111.7665047 }, "Bell Rock"],
-            ];
-            // Create an info window to share between markers.
-            const infoWindow = new google.maps.InfoWindow();
-            // Create the markers.
-            tourStops.forEach(([position, title], i) => {
-                const marker = new google.maps.Marker({
-                    position,
-                    map,
-                    title: `${i + 1}. ${title}`,
-                    label: `${i + 1}`,
-                    optimized: false,
-                });
-
-                // Add a click listener for each marker, and set up the info window.
-                marker.addListener("click", () => {
-                    infoWindow.close();
-                    infoWindow.setContent(marker.getTitle());
-                    infoWindow.open(marker.getMap(), marker);
-                });
-            });
-            var myLatLng = new google.maps.LatLng(55.61819, 12.65075);
-
-            var markerUser = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                draggable:true,
-                title:"Drag me!"
-            });
-            markerUser.addListener("click", () => {
-                infoWindow.close();
-                infoWindow.setContent(markerUser.getTitle());
-                infoWindow.open(markerUser.getMap(), markerUser);
-            });
-        }
-    </script> <!-- MAP SCRIPT -->
-    <style type="text/css">
-        /* Set the size of the div element that contains the map */
-        #map {
-            height: 350px;
-            /* The height is 400 pixels */
-            width: 50%;
-            /* The width is the width of the web page */
-        }
-    </style> <!-- MAP STYLE -->
 </head>
 <body>
 <h1 class="gradient-text">Nordic Motorhome Rental</h1>
@@ -137,11 +77,11 @@
             <input type="submit" value="Search" style="position:absolute; left:825px; top:135px;">
             <div>
                 <label for="capcitySlider">Num. of people</label>
-                <input type="range" id="capcitySlider" min="1" max="8" value="4" name="capacity"> <p style="position: absolute; left: 70%; top: 42% "><span id="demo"></span></p>
+                <input type="range" id="capcitySlider" min="1" max="6" value="3" name="capacity"> <p style="position: absolute; left: 70%; top: 42% "><span id="capacity"></span></p>
 
                 <script>
                     var slider = document.getElementById("capcitySlider");
-                    var output = document.getElementById("demo");
+                    var output = document.getElementById("capacity");
                     output.innerHTML = slider.value; // Display the default slider value
 
                 // Update the current slider value (each time you drag the slider handle)
@@ -158,15 +98,6 @@
 </div>
 
 
-<h3>My Google Maps Demo</h3>
-<!--The div element for the map -->
-<div id="map"></div>
-
-<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWYC7pYphver783c0pLORPEY4b-N6aq2A&callback=initMap&libraries=&v=weekly"
-        async
-></script>
 
 
 </body>
