@@ -82,9 +82,9 @@ public class Calculator {
 
 
     public double calculateMotorhomePriceForPeriod() {
-        Period contractPeriod = Period.between(rentalContract.getStart_datetime().toLocalDate(), rentalContract.getEnd_datetime().toLocalDate());
+        Duration duration = Duration.between(rentalContract.getStart_datetime(), rentalContract.getEnd_datetime());
 
-        return  MOTORHOME_PRICE_PER_DAY * contractPeriod.getDays();
+        return  MOTORHOME_PRICE_PER_DAY * duration.toDays();
 
     }
 
