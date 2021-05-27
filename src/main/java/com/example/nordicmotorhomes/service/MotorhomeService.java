@@ -28,4 +28,5 @@ public class MotorhomeService {
 
     public Motorhome insertMotorhome(Motorhome motorhome) {return motorhomeRepository.insertMotorhome(motorhome);}
 
+    public boolean motorhomeInContract(int id) { return  motorhomeRepository.motorhomeInContract(id); }
 }

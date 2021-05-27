@@ -24,6 +24,12 @@ public class MotorhomeRepository {
         return template.queryForObject(sql, motorhomeRowMapper, id);
     }
 
+    public boolean motorhomeInContract(int id) {
+        String sql ="SELECT count(*) from rental_contracts where motorhome_id = ?";
+        Integer result = template.queryForObject(sql, Integer.class, id);
+        return result > 0;
+    }
+
     public Motorhome updateMotorhome(Motorhome motorhome){
 
         String motorhomes_sql = "UPDATE motorhomes SET "+

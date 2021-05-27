@@ -11,6 +11,7 @@ public class Motorhome {
     private String brand_name;
     private int capacity;
     private double odometer;
+    private boolean activeContract;
 
 
     public Motorhome() {}
@@ -29,6 +30,15 @@ public class Motorhome {
 
 
     //<editor-fold desc="Getters and setters">
+    public boolean isActiveContract() {
+        return activeContract;
+    }
+
+    public void setActiveContract(boolean activeContract) {
+        this.activeContract = activeContract;
+    }
+
+
     public int getMotorhome_id() {
         return motorhome_id;
     }

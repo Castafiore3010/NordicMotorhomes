@@ -50,7 +50,7 @@
               </a>
             </div>
 
-            <div id="knap3">
+            <div id="knap3" th:if="${customer.activeContract == false}">
               <a th:href="@{'/deletePersonId='+${customer.person_id}}">
                 <button class="btn-delete" onclick="alert('Successfully deleted the customer! :) You cant go back btw....')">Delete</button>
               </a>

@@ -248,7 +248,15 @@ public class HomeController {
     // VIEW ALLS
     @GetMapping("/viewAllCustomers")
     public String viewAllCustomers(Model model) {
-        model.addAttribute("customers", personService.fetchAllCustomers());
+        List<Customer> customers = personService.fetchAllCustomers();
+        for (Customer customer : customers) {
+            if (personService.personInContract(customer.getPerson_id())) {
+                customer.setActiveContract(true);
+            } else {
+                customer.setActiveContract(false);
+            }
+        }
+        model.addAttribute("customers", customers);
 
         return "home/viewAllCustomers";
     }
@@ -261,7 +269,15 @@ public class HomeController {
 
     @GetMapping("/viewAllMotorhomes")
     public String viewAllMotorhomes(Model model) {
-        model.addAttribute("motorhomes", motorhomeService.fetchAllMotorhomes());
+        List<Motorhome> motorhomes = motorhomeService.fetchAllMotorhomes();
+        for (Motorhome motorhome : motorhomes) {
+            if (motorhomeService.motorhomeInContract(motorhome.getMotorhome_id())) {
+                motorhome.setActiveContract(true);
+            } else {
+                motorhome.setActiveContract(false);
+            }
+        }
+        model.addAttribute("motorhomes", motorhomes);
         return "home/viewAllMotorhomes";
     }
 

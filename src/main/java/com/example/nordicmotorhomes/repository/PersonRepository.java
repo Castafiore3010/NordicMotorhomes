@@ -18,11 +18,18 @@ public class PersonRepository  {
 
 
     public List<Customer> fetchAllCustomers() {
+
         return template.query("SELECT * FROM persons where person_type = 'customer'", new BeanPropertyRowMapper<>(Customer.class));
     }
 
     public List<Employee> fetchAllEmployees() {
         return template.query("SELECT * FROM persons where person_type = 'employee'", new BeanPropertyRowMapper<>(Employee.class));
+    }
+
+    public boolean personInContract(int id) {
+        String sql = "SELECT count(*) from rental_contracts WHERE person_id = ?";
+        Integer result = template.queryForObject(sql, Integer.class, id);
+        return result > 0;
     }
 
     public Person insertPerson(Person person) {
