@@ -42,7 +42,7 @@
         <td th:text="${motorhome.price_id}"></td>
 
         <div id="buttonBox" class="buttonBox">
-          <td style="border-right: none;">
+          <td>
             <div id="knap1">
               <a th:href="@{'/inspectMotorhomeId='+${motorhome.motorhome_id}}">
                 <button class="btn-inspect">Inspect</button>
@@ -60,6 +60,9 @@
               </a>
             </div>
           </td>
+        </div>
+        <div id="imgTD">
+          <td style="border-right: none"><img class="img" th:src="${motorhome.model_name}+.png" alt="error" height="100"></td>
         </div>
       </tr>
     </tbody>
