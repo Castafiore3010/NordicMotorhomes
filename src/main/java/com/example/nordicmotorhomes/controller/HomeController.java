@@ -144,7 +144,11 @@ public class HomeController {
                 bookingDetails.getCity_name(), bookingDetails.getCountry());
 
 
-        personService.createNewPerson(customer);
+        if (personService.emailExists(customer.getEmail())) {
+            personService.updatePerson(customer);
+        } else {
+            personService.createNewPerson(customer);
+        }
         int person_id = personService.personIdByEmail(customer.getEmail());
         int motorhome_id = bookingDetails.getMotorhome_id();
         int pickUp_id = bookingDetails.getPickUp_id();

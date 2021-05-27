@@ -38,6 +38,7 @@ public class PersonService {
         return personRepository.insertPerson(person);
     }
 
+    public boolean emailExists(String email) { return personRepository.emailExists(email); }
     public boolean personInContract(int id) { return personRepository.personInContract(id); }
 
     public Person updatePerson(Person person) { return personRepository.updatePerson(person); }

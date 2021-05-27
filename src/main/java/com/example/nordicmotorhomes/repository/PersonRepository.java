@@ -144,6 +144,10 @@ public class PersonRepository  {
         return address_id;
     }
 
+    public boolean emailExists(String email) {
+        String sql = "SELECT count(*) from persons where email = ?";
+        return template.queryForObject(sql, Integer.class, email) > 0;
+    }
     public Integer personIdByEmail(String email) {
         String sql = "SELECT person_id from persons where email = ?";
         Integer person_id = template.queryForObject(sql, Integer.class, email);
