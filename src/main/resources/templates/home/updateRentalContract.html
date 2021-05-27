@@ -7,13 +7,16 @@
     <style>
         #pickupUpdate{
             position: absolute;
-            left: 61%;
-            top: 39%;
+            left: 57.4%;
+            top: 38%;
+            width: 44px;
+
         }
         #dropoffUpdate{
             position: absolute;
-            left: 61%;
-            top: 44%;
+            left: 57.4%;
+            top: 42.3%;
+            width: 44px;
         }
 
     </style>
@@ -65,10 +68,10 @@
 
     </form>
     <div id="pickupUpdate">
-    <a id="" th:href="@{'/updateContactPointId='+${rentalContract.contact_point_pickup_id}+'/'+${rentalContract.rental_contract_id}}"><button>Update PICK UP</button></a>
+    <a id="" th:href="@{'/updateContactPointId='+${rentalContract.contact_point_pickup_id}+'/'+${rentalContract.rental_contract_id}}"><button style="height: 41px">Update pickup</button></a>
     </div>
     <div id="dropoffUpdate">
-    <a th:href="@{'/updateContactPointId='+${rentalContract.contact_point_dropoff_id}}"><button>Update Dropoff</button></a>
+    <a th:href="@{'/updateContactPointId='+${rentalContract.contact_point_dropoff_id}+ '/' +${rentalContract.rental_contract_id}}"><button style="height: 41px">Update Dropoff</button></a>
     </div>
 </div>
 
