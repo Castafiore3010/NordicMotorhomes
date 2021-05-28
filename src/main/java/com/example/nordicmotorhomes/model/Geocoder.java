@@ -17,33 +17,33 @@ public class Geocoder {
 
     public String GeocodeSync(String query) throws IOException, InterruptedException {
 
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = HttpClient.newHttpClient(); // HttpClient object
 
         String encodedQuery = URLEncoder.encode(query,"UTF-8"); //Encryption?
-        String requestUri = GEOCODING_RESOURCE + "?apiKey=" + API_KEY + "&q=" + encodedQuery;
+        String requestUri = GEOCODING_RESOURCE + "?apiKey=" + API_KEY + "&q=" + encodedQuery; // complete URI request
 
-        HttpRequest geocodingRequest = HttpRequest.newBuilder().GET().uri(URI.create(requestUri)) //Ved ikke
-                .timeout(Duration.ofMillis(2000)).build(); //Hvis den ikke får svar, så smider den interupt-exception
+        HttpRequest geocodingRequest = HttpRequest.newBuilder().GET().uri(URI.create(requestUri)) // build request with URI
+                .timeout(Duration.ofMillis(2000)).build(); //Hvis den ikke får svar, så smider den interrupt-exception
 
         HttpResponse geocodingResponse = httpClient.send(geocodingRequest,
-                HttpResponse.BodyHandlers.ofString());
+                HttpResponse.BodyHandlers.ofString()); // httpClient sends HttpRequest which is mapped to HttpResponse geocodingResponse
 
-        return (String) geocodingResponse.body();
+        return (String) geocodingResponse.body(); // response body is returned as String
     }
     public double[] getLatLngFromStreetAdress(String fullAddress) throws IOException, InterruptedException{
         // address example: 10 Burmeistersgade, København, 1429
-        double[] coordinates = new double[2];
-        ObjectMapper mapper = new ObjectMapper(); //Rowmapper?
+        double[] coordinates = new double[2]; // Array to hold coordinate values
+        ObjectMapper mapper = new ObjectMapper(); //Object mapper, comparable to RowMapper
         Geocoder geocoder = new Geocoder();
 
-        String response = geocoder.GeocodeSync(fullAddress);
-        JsonNode responseJsonNode = mapper.readTree(response);
-        JsonNode items = responseJsonNode.get("items");
+        String response = geocoder.GeocodeSync(fullAddress); // get response
+        JsonNode responseJsonNode = mapper.readTree(response); // read response
+        JsonNode items = responseJsonNode.get("items"); // get response items
 
         for (JsonNode item : items) {
-            JsonNode position = item.get("position");
-            coordinates[0] = position.get("lat").asDouble();
-            coordinates[1] = position.get("lng").asDouble();
+            JsonNode position = item.get("position"); // get positional data
+            coordinates[0] = position.get("lat").asDouble(); // latitude as double assigned to coordinates[0]
+            coordinates[1] = position.get("lng").asDouble(); // longitude as double assigned to coordinates[1]
         }
 
         return coordinates;
