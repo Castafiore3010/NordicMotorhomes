@@ -100,35 +100,44 @@ public class HomeController {
 
 
 
-    @PostMapping("/bookMotorhome")
+    @PostMapping("/bookMotorhome") // search button in index
     public String searchMotorhome(@ModelAttribute SearchResult searchResult, Model model) {
+        // searchResult(start,end, capacity) mapped to model, to hold user specified dates and capacity.
         model.addAttribute("searchResult", searchResult);
-        List<Motorhome> motorhomes = motorhomeService.fetchAllMotorhomes();
-        List<Motorhome> availableMotorhomes = new ArrayList<>();
+        List<Motorhome> motorhomes = motorhomeService.fetchAllMotorhomes(); // all motorhomes in database are fetched
+        List<Motorhome> availableMotorhomes = new ArrayList<>(); // new list to hold available motorhomes.
 
-        for (Motorhome motorhome : motorhomes) {
+        for (Motorhome motorhome : motorhomes) { // for each
             if (motorhome.getCapacity() >= searchResult.getCapacity() &&
                     !rentalContractService.motorhomeInContractInPeriod(motorhome, searchResult.getStart_datetime(), searchResult.getEnd_datetime())) {
                 availableMotorhomes.add(motorhome);
             }
+            // if motorhome capacity is equal to, or larger than user specified AND given motorhome is not in a contract
+            // in the specified period. (line 110/111)
+            // then we add the motorhome to our availableMotorhomes list.
         }
+        // the List<Motorhome> availableMotorhomes is mapped to the model as "motorhomes"
         model.addAttribute("motorhomes", availableMotorhomes);
 
         return "home/bookingPage";
     }
 
-    @GetMapping("/bookMotorhomeId={motorhome_id}/{start}/{end}")
+    @GetMapping("/bookMotorhomeId={motorhome_id}/{start}/{end}") // Book now button on bookingPage
     public String bookNowButton(@PathVariable ("motorhome_id") int id, @PathVariable ("start") LocalDateTime start, @PathVariable ("end") LocalDateTime end, Model model) {
 
-        Motorhome motorhome = motorhomeService.findMotorhomeById(id);
+        Motorhome motorhome = motorhomeService.findMotorhomeById(id); // Motorhome object is fetched from database via id.
 
-        model.addAttribute("motorhome", motorhome);
+        model.addAttribute("motorhome", motorhome); // fetched Motorhome is mapped to model as "motorhome"
+        // all predefined valid contactPoints are fetched as a List<ContactPoint>.
         List<ContactPoint> validPoints = contactPointService.fetchAllValidContactPoints();
-        model.addAttribute("contact_points", validPoints);
+        model.addAttribute("contact_points", validPoints); // fetched list is mapped to model as "contact_points"
+        // String "Specify Other" is mapped to model as "other".
+        // This is done to utilize this option as a part of a <select> dropdown
         String other = "Specify Other";
         model.addAttribute("other", other);
+        // SearchResult object is created via PathVariables start and end + the capacity of targeted motorhome.
         SearchResult searchResult = new SearchResult(start, end, motorhome.getCapacity());
-        model.addAttribute("searchResult", searchResult);
+        model.addAttribute("searchResult", searchResult); // SearchResult mapped to model as "searchResult"
 
 
         return "home/confirmBooking";
@@ -137,44 +146,52 @@ public class HomeController {
 
     @PostMapping("/confirmBooking")
     public String confirmBooking(@ModelAttribute bookingDetails bookingDetails, Model model) {
+        // BookingDetails object is mapped to model as "bookingDetails"
         model.addAttribute("bookingDetails", bookingDetails);
+        // new Customer is created with data from BookingDetails object.
         Person customer = new Customer(bookingDetails.getPerson_first_name(), bookingDetails.getPerson_last_name(),
                 bookingDetails.getPerson_email(), bookingDetails.getPerson_phone(), bookingDetails.getPerson_birthdate(),
                 "customer", "", bookingDetails.getStreet_address(), bookingDetails.getZipcode(),
                 bookingDetails.getCity_name(), bookingDetails.getCountry());
 
-
+        // if specified email exists - update past data with new data
         if (personService.emailExists(customer.getEmail())) {
             personService.updatePerson(customer);
+        // else write new data to database
         } else {
             personService.createNewPerson(customer);
         }
-        int person_id = personService.personIdByEmail(customer.getEmail());
-        int motorhome_id = bookingDetails.getMotorhome_id();
-        int pickUp_id = bookingDetails.getPickUp_id();
-        int dropOff_id = bookingDetails.getDropOff_id();
+        int person_id = personService.personIdByEmail(customer.getEmail()); // id of current customer
+        int motorhome_id = bookingDetails.getMotorhome_id(); // id of motorhome to book
+        int pickUp_id = bookingDetails.getPickUp_id(); // id of pickup location.
+        int dropOff_id = bookingDetails.getDropOff_id(); // id of dropoff location
 
-        if (bookingDetails.getPickUp_id() == 0) {
+        if (bookingDetails.getPickUp_id() == 0) { // if "Specify Other" is selected for pickUp
+            // Full address format specified by customer
             String fullAddressPickup = bookingDetails.getFullAddress_pickup();
-            Geocoder geocoder = new Geocoder();
-            double[] coordinates = new double[2];
+            Geocoder geocoder = new Geocoder(); // Geocoder object
+            double[] coordinates = new double[2]; // double[] to hold coordinate values.
             try {
-                 coordinates = geocoder.getLatLngFromStreetAdress(fullAddressPickup);
-            } catch (InterruptedException interruptedException) {
+                 coordinates = geocoder.getLatLngFromStreetAdress(fullAddressPickup); // get lat & lng
+            } catch (InterruptedException interruptedException) { // no answer from server
                 interruptedException.printStackTrace();
-            } catch (IOException ioException) {
+            } catch (IOException ioException) { // No result for specified address string
                 ioException.printStackTrace();
             }
-            String[] address = fullAddressPickup.split(",");
+            String[] address = fullAddressPickup.split(","); // split fullAddress string into String[]
             String street_address = address[0].trim();
             String zipcode = address[1].trim();
             String city_name = address[2].trim();
+            // new ContactPoint with newly obtained coordinates
             ContactPoint contactPoint = new ContactPoint(coordinates[0], coordinates[1], street_address, zipcode, city_name);
+            // write data to database
             contactPointService.insertContactPoint(contactPoint);
+            // update pickUp id to user specified pickUp address.
             pickUp_id = contactPointService.contactPointIdByLatAndlng(coordinates);
 
         }
-        if (bookingDetails.getDropOff_id() == 0) {
+        //  Same procedure as for PickUp
+        if (bookingDetails.getDropOff_id() == 0) { // if "Specify Other" is selected for Dropoff.
             String fullAddressDropoff = bookingDetails.getFullAddress_dropoff();
             Geocoder geocoder = new Geocoder();
             double[] coordinates = new double[2];
@@ -194,29 +211,35 @@ public class HomeController {
             dropOff_id = contactPointService.contactPointIdByLatAndlng(coordinates);
 
         }
+        // Short format RentalContract object is created.
         InsertRentalContract rentalContract = new InsertRentalContract(bookingDetails.getStart(), bookingDetails.getEnd(), person_id, motorhome_id, pickUp_id, dropOff_id);
-        rentalContractService.insertRentalContract(rentalContract);
-        Motorhome motorhome = motorhomeService.findMotorhomeById(motorhome_id);
-        int price_id = motorhome.getPrice_id();
-        Price price = priceService.findPriceById(price_id);
+        rentalContractService.insertRentalContract(rentalContract); // write data to database
+        Motorhome motorhome = motorhomeService.findMotorhomeById(motorhome_id); // fetch Motorhome by id
+        int price_id = motorhome.getPrice_id(); // Motorhome price id
+        Price price = priceService.findPriceById(price_id); // price object from price id
+        // Contract id
         int rental_contract_id = rentalContractService.rentalContractIdByStartEndPersonIdMotorhomeId(rentalContract);
+        // Full format RentalContract object is created
         RentalContract rentalContractLong = rentalContractService.findContractById(rental_contract_id);
-        model.addAttribute("rentalContract", rentalContractLong);
-        ContactPoint cpPickUp = contactPointService.findContactPointById(pickUp_id);
-        ContactPoint cpDropOff = contactPointService.findContactPointById(dropOff_id);
-        List<ContactPoint> validPoints = contactPointService.fetchAllValidContactPoints();
+        model.addAttribute("rentalContract", rentalContractLong); // full format contract added to model
+        ContactPoint cpPickUp = contactPointService.findContactPointById(pickUp_id); // pickUp point fetched
+        ContactPoint cpDropOff = contactPointService.findContactPointById(dropOff_id); // dropOff point fetched
+        List<ContactPoint> validPoints = contactPointService.fetchAllValidContactPoints(); // all points marked as "valid"
+        // Calculator is created to calculate prices.
         Calculator calculator = new Calculator(rentalContractLong, price, cpPickUp, cpDropOff, validPoints);
 
+        // Motorhome basecost + seasonal markup
         double motorhomeCost = calculator.calculateMotorhomePriceForPeriod();
         String motorhomeCost1 = String.format("%.2f €", motorhomeCost);
-        model.addAttribute("motorhomeCost", motorhomeCost1);
+        model.addAttribute("motorhomeCost", motorhomeCost1); // formatted price String added to model
 
+        // Full price for contract including transfercost
         double totalCost = calculator.calculateTotalContractPrice();
         String totalCost1 = String.format("%.2f €", totalCost);
-        model.addAttribute("totalPrice", totalCost1);
+        model.addAttribute("totalPrice", totalCost1); // formatted total added to model
         double transferCost = totalCost - motorhomeCost;
         String transferCost1 = String.format("%.2f €", transferCost);
-        model.addAttribute("transferCost", transferCost1);
+        model.addAttribute("transferCost", transferCost1); // formatted transfercost mapped to model
 
         return "home/bookingConfirmed";
 
