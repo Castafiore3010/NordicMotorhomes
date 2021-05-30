@@ -15,11 +15,11 @@ public class Geocoder {
     private static final String GEOCODING_RESOURCE = "https://geocode.search.hereapi.com/v1/geocode";
     private static final String API_KEY = "I9Vw4VKW8x0PGkQqh8FqSeQcos01iuSbV4ALe3icc3k"; //Update API
 
-    public String GeocodeSync(String query) throws IOException, InterruptedException {
+    public String geocodeSync(String query) throws IOException, InterruptedException {
 
         HttpClient httpClient = HttpClient.newHttpClient(); // HttpClient object
 
-        String encodedQuery = URLEncoder.encode(query,"UTF-8"); //Encryption?
+        String encodedQuery = URLEncoder.encode(query,"UTF-8"); //Encryption
         String requestUri = GEOCODING_RESOURCE + "?apiKey=" + API_KEY + "&q=" + encodedQuery; // complete URI request
 
         HttpRequest geocodingRequest = HttpRequest.newBuilder().GET().uri(URI.create(requestUri)) // build request with URI
@@ -36,7 +36,7 @@ public class Geocoder {
         ObjectMapper mapper = new ObjectMapper(); //Object mapper, comparable to RowMapper
         Geocoder geocoder = new Geocoder();
 
-        String response = geocoder.GeocodeSync(fullAddress); // get response
+        String response = geocoder.geocodeSync(fullAddress); // get response
         JsonNode responseJsonNode = mapper.readTree(response); // read response
         JsonNode items = responseJsonNode.get("items"); // get response items
 

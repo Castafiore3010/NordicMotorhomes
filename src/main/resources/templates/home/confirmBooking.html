@@ -49,22 +49,26 @@
     </select> <br>
     <label for="pickup">Pickup</label>
     <select name="pickUp_id"  style="width: 27%;height: 40px;" id="pickup" required> <br>
-      <option th:each="contact_point : ${contact_points}"  th:value="${contact_point.contact_point_id}" th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
+      <option th:each="contact_point : ${contact_points}"  th:value="${contact_point.contact_point_id}"
+              th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
       </option>
       <option th:value="0" th:utext="${other}">
       </option>
     </select> <br>
     <label for="dropoff">Dropoff</label>
     <select name="dropOff_id" style="width: 27%;height: 40px;" id="dropoff" required><br>
-      <option th:each="contact_point : ${contact_points}" th:value="${contact_point.contact_point_id}"  th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
+      <option th:each="contact_point : ${contact_points}" th:value="${contact_point.contact_point_id}"
+              th:utext="${contact_point.contact_point_id}+' : '+${contact_point.contact_point_name}">
       </option>
       <option th:value="0" th:utext="${other}">
       </option>
     </select> <br>
     <label>Specify pickup</label>
-    <input type="text" name="fullAddress_pickup" placeholder="e.g. Nørrebrogade 150, 2200, København N" style="font-size: 12px;" pattern="^[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+$"> <br>
+    <input type="text" name="fullAddress_pickup" placeholder="e.g. Nørrebrogade 150, 2200, København N"
+           style="font-size: 12px;" pattern="^[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+$"> <br>
     <label>Specify dropoff</label>
-    <input type="text" name="fullAddress_dropoff" placeholder="e.g. Toftegårds allé 41, 2500, Valby" style="font-size: 12px;" pattern="^[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+$"> <br>
+    <input type="text" name="fullAddress_dropoff" placeholder="e.g. Toftegårds allé 41, 2500, Valby"
+           style="font-size: 12px;" pattern="^[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+[,]+[\sa-zA-Z0-9.æøåÆØÅ-]+$"> <br>
     <input type="submit" value="Book">
 
   </form>

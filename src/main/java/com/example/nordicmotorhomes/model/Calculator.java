@@ -83,15 +83,12 @@ public class Calculator {
 
     public double calculateMotorhomePriceForPeriod() {
         Duration duration = Duration.between(rentalContract.getStart_datetime(), rentalContract.getEnd_datetime());
-
         return  MOTORHOME_PRICE_PER_DAY * duration.toDays();
-
     }
 
     public double calculateTransferCost(double distance) {
         int roundedDistance = (int) distance;
         double transferCostPerKilometer = 0.70;
-
         return roundedDistance * transferCostPerKilometer;
 
     }
@@ -101,6 +98,7 @@ public class Calculator {
         int id = -1;
         double shortestDistance = 10000;
         System.out.println("INITIAL POINT : " + initialPoint.getContact_point_name());
+
 
         for (ContactPoint contactPoint : validPoints) {
             System.out.println(contactPoint.getContact_point_name());
@@ -119,6 +117,7 @@ public class Calculator {
 
 
     }
+
 
     public double calculateTotalContractPrice() {
         double motorhomeTotalPriceForPeriod = (calculateMotorhomePriceForPeriod());

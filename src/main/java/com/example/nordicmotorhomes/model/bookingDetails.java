@@ -9,7 +9,6 @@ public class bookingDetails {
     private int motorhome_id;
     private int pickUp_id;
     private int dropOff_id;
-
     // duration data
     private LocalDateTime start;
     private LocalDateTime end;

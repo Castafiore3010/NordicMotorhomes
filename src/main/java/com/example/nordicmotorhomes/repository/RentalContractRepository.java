@@ -34,7 +34,9 @@ public class RentalContractRepository {
 
     }
 
-    public boolean motorhomeInContractInPeriod(Motorhome motorhome, LocalDateTime start_datetime, LocalDateTime end_datetime) {
+    public boolean motorhomeInContractInPeriod(Motorhome motorhome, LocalDateTime start_datetime,
+                                               LocalDateTime end_datetime) {
+
         String check_sql = "SELECT count(*) from rental_contracts WHERE motorhome_id = "+motorhome.getMotorhome_id() +
                 " and ((start_datetime between '" + start_datetime +"' and '"+end_datetime+"')" +
                 " or" +

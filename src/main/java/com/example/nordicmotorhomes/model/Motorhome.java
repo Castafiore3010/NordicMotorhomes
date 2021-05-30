@@ -12,6 +12,7 @@ public class Motorhome {
     private int capacity;
     private double odometer;
     private boolean activeContract;
+    private int price_id;
 
 
     public Motorhome() {}
@@ -26,7 +27,7 @@ public class Motorhome {
         this.price_id = price_id;
     }
 
-    private int price_id; // evt price objekt?
+
 
 
     //<editor-fold desc="Getters and setters">

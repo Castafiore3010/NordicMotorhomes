@@ -31,9 +31,7 @@ public class HomeController {
 
     // HOME PAGE
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("customers", personService.fetchAllCustomers());
-        model.addAttribute("employees", personService.fetchAllEmployees());
+    public String index() {
 
         return "home/index";
     }
@@ -109,7 +107,8 @@ public class HomeController {
 
         for (Motorhome motorhome : motorhomes) { // for each
             if (motorhome.getCapacity() >= searchResult.getCapacity() &&
-                    !rentalContractService.motorhomeInContractInPeriod(motorhome, searchResult.getStart_datetime(), searchResult.getEnd_datetime())) {
+                    !rentalContractService.motorhomeInContractInPeriod(motorhome, searchResult.getStart_datetime(),
+                            searchResult.getEnd_datetime())) {
                 availableMotorhomes.add(motorhome);
             }
             // if motorhome capacity is equal to, or larger than user specified AND given motorhome is not in a contract
@@ -123,7 +122,9 @@ public class HomeController {
     }
 
     @GetMapping("/bookMotorhomeId={motorhome_id}/{start}/{end}") // Book now button on bookingPage
-    public String bookNowButton(@PathVariable ("motorhome_id") int id, @PathVariable ("start") LocalDateTime start, @PathVariable ("end") LocalDateTime end, Model model) {
+    public String bookNowButton(@PathVariable ("motorhome_id") int id,
+                                @PathVariable ("start") LocalDateTime start,
+                                @PathVariable ("end") LocalDateTime end, Model model) {
 
         Motorhome motorhome = motorhomeService.findMotorhomeById(id); // Motorhome object is fetched from database via id.
 
@@ -212,7 +213,8 @@ public class HomeController {
 
         }
         // Short format RentalContract object is created.
-        InsertRentalContract rentalContract = new InsertRentalContract(bookingDetails.getStart(), bookingDetails.getEnd(), person_id, motorhome_id, pickUp_id, dropOff_id);
+        InsertRentalContract rentalContract = new InsertRentalContract(bookingDetails.getStart(), bookingDetails.getEnd(),
+                person_id, motorhome_id, pickUp_id, dropOff_id);
         rentalContractService.insertRentalContract(rentalContract); // write data to database
         Motorhome motorhome = motorhomeService.findMotorhomeById(motorhome_id); // fetch Motorhome by id
         int price_id = motorhome.getPrice_id(); // Motorhome price id
