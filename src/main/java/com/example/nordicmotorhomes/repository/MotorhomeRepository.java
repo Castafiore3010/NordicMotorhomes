@@ -14,23 +14,23 @@ public class MotorhomeRepository {
     @Autowired
     JdbcTemplate template;
 
-    public List<Motorhome> fetchAllMotorhomes () {
+    public List<Motorhome> fetchAllMotorhomes () { //get all motorhomes
         return template.query("SELECT * FROM motorhomes", new BeanPropertyRowMapper<>(Motorhome.class));
     }
 
-    public Motorhome findMotorhomeById(int id) {
+    public Motorhome findMotorhomeById(int id) { //get specific motorhome
         String sql = "SELECT * FROM motorhomes WHERE motorhome_id = ?";
         RowMapper<Motorhome> motorhomeRowMapper = new BeanPropertyRowMapper<>(Motorhome.class);
         return template.queryForObject(sql, motorhomeRowMapper, id);
     }
 
-    public boolean motorhomeInContract(int id) {
+    public boolean motorhomeInContract(int id) { // check if motorhome is in contract (for safe delete)
         String sql ="SELECT count(*) from rental_contracts where motorhome_id = ?";
         Integer result = template.queryForObject(sql, Integer.class, id);
         return result > 0;
     }
 
-    public Motorhome updateMotorhome(Motorhome motorhome){
+    public Motorhome updateMotorhome(Motorhome motorhome){ // update database
 
         String motorhomes_sql = "UPDATE motorhomes SET "+
                 " model_name='"+motorhome.getModel_name()+"',"+
@@ -43,14 +43,14 @@ public class MotorhomeRepository {
         return null;
     }
 
-    public Motorhome deleteMotorhome(int id) {
+    public Motorhome deleteMotorhome(int id) { // delete from database
         String delete_sql = "DELETE from motorhomes where motorhome_id = ?";
         template.update(delete_sql, id);
         return null;
 
     }
 
-    public Motorhome insertMotorhome(Motorhome motorhome) {
+    public Motorhome insertMotorhome(Motorhome motorhome) { // write data to database
         String insert_sql = "INSERT INTO motorhomes (model_name, brand_name, capacity, odometer, price_id) VALUES (?,?,?,?,?)";
         template.update(insert_sql, motorhome.getModel_name(), motorhome.getBrand_name(), motorhome.getCapacity(), motorhome.getOdometer(), motorhome.getPrice_id());
         return null;

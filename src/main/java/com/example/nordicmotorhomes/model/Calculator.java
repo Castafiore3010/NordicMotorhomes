@@ -54,8 +54,8 @@ public class Calculator {
             contractSeason ="winter";
         }
         this.contract_season = contractSeason;
-        double middleSeasonPriceModifier = 1.30;
-        double peakSeasonPriceModifier = 1.60;
+        double middleSeasonPriceModifier = 1.30; // spring, fall modifier.
+        double peakSeasonPriceModifier = 1.60; // summer modfier
         switch (contractSeason) {
             case "summer":
                 MOTORHOME_PRICE_PER_DAY = price.getPrice_per_day() * peakSeasonPriceModifier;
@@ -95,24 +95,25 @@ public class Calculator {
 
     public ContactPoint closestValidPoint(ContactPoint initialPoint) {
         System.out.println(contract_season);
-        int id = -1;
-        double shortestDistance = 10000;
+        int id = -1; // id - updated to correct value line 109
+        double shortestDistance = 10000; // value larger than largest possible
         System.out.println("INITIAL POINT : " + initialPoint.getContact_point_name());
 
 
-        for (ContactPoint contactPoint : validPoints) {
+        for (ContactPoint contactPoint : validPoints) { // for each
             System.out.println(contactPoint.getContact_point_name());
             System.out.println(shortestDistance);
+            // if distance between current element in list and initialPoint is shorter than shortestdistance :
             if (contactPoint.distanceTo(initialPoint) <= shortestDistance) {
-                shortestDistance = contactPoint.distanceTo(initialPoint);
+                shortestDistance = contactPoint.distanceTo(initialPoint); // update distance value
                 System.out.println(shortestDistance);
-                id = contactPoint.getContact_point_id();
+                id = contactPoint.getContact_point_id(); // update id
                 System.out.println(id);
             }
         }
 
         System.out.println("CLOSEST ID: " + id);
-        return validPoints.get(id -1);
+        return validPoints.get(id -1); // return "found" element in list.
 
 
 

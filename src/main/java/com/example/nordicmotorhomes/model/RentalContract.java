@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 
 @Entity
 public class RentalContract {
-    private int motorhome_id; // objekt?
-    private int person_id; // customer objekt?
+    private int motorhome_id;
+    private int person_id;
     @Id
     private int rental_contract_id;
     private LocalDateTime start_datetime;
     private LocalDateTime end_datetime;
-    private int contact_point_pickup_id; // objekt
-    private int contact_point_dropoff_id; // objekt
+    private int contact_point_pickup_id;
+    private int contact_point_dropoff_id;
     private String pickup_name;
     private String pickup_type;
     private String dropoff_name;

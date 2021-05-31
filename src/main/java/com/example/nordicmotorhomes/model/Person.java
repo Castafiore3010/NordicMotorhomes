@@ -9,7 +9,7 @@ public abstract class Person {
     private int country_id;
     private int city_id;
     private int zipcode_id;
-    private int address_id; // evt Address object?
+    private int address_id;
     @Id
     private int person_id;
     private String first_name;

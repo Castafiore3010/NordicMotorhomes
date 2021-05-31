@@ -19,7 +19,7 @@ public class RentalContractRepository {
     JdbcTemplate template;
 
 
-    public List<RentalContract> fetchAllFinishedRentalContracts() {
+    public List<RentalContract> fetchAllFinishedRentalContracts() { // get all contracts with end before today
         LocalDateTime now = LocalDateTime.now();
         List<RentalContract> rentalContracts = fetchAllRentalContracts();
         List<RentalContract> finishedContracts = new ArrayList<>();
@@ -34,6 +34,8 @@ public class RentalContractRepository {
 
     }
 
+    // checks if motorhome is in contract in specified period between start_datetime and end_datetime,
+    // by counting number of rows in database that satisfy where & and clauses
     public boolean motorhomeInContractInPeriod(Motorhome motorhome, LocalDateTime start_datetime,
                                                LocalDateTime end_datetime) {
 
@@ -49,7 +51,7 @@ public class RentalContractRepository {
         return inContract;
     }
 
-    public List<RentalContract> fetchAllRentalContracts() {
+    public List<RentalContract> fetchAllRentalContracts() { // get all contracts in database
         String fetch = "SELECT motorhome_id, person_id, rental_contract_id, start_datetime, end_datetime," +
                 " contact_point_pickup_id, contact_point_dropoff_id, cp1.contact_point_name AS pickup_name," +
                 " cp1.contact_point_type AS pickup_type, cp2.contact_point_name AS dropoff_name," +
@@ -64,7 +66,7 @@ public class RentalContractRepository {
 
     }
 
-    public RentalContract findContractById(int id){
+    public RentalContract findContractById(int id){ // get specific contract in database
         String fetch = "SELECT motorhome_id, person_id, rental_contract_id, start_datetime, end_datetime," +
                 " contact_point_pickup_id, contact_point_dropoff_id, cp1.contact_point_name AS pickup_name," +
                 " cp1.contact_point_type AS pickup_type, cp2.contact_point_name AS dropoff_name," +
@@ -78,13 +80,13 @@ public class RentalContractRepository {
         return template.queryForObject(fetch,new BeanPropertyRowMapper<>(RentalContract.class),id);
     }
 
-    public RentalContract deleteRentalContractById(int id){
+    public RentalContract deleteRentalContractById(int id){ // delete specific contract in database
         String delete_sql = "DELETE FROM rental_contracts WHERE rental_contract_id = ?";
         template.update(delete_sql,id);
         return null;
     }
 
-    public RentalContract updateRentalContract(RentalContract rentalContract){
+    public RentalContract updateRentalContract(RentalContract rentalContract){ // update specific contract in database
         String update_sql = "UPDATE rental_contracts SET start_datetime = '"+ rentalContract.getStart_datetime() +
                 "', end_datetime = '"+ rentalContract.getEnd_datetime()+
                 "', person_id = '"+ rentalContract.getPerson_id() +
@@ -97,7 +99,7 @@ public class RentalContractRepository {
     return null;
     }
 
-    public RentalContract insertRentalContract(InsertRentalContract rentalContract) {
+    public RentalContract insertRentalContract(InsertRentalContract rentalContract) { // insert contract data
         String insert_sql = "INSERT INTO rental_contracts (start_datetime, end_datetime, person_id, motorhome_id, " +
                 "contact_point_pickup_id, contact_point_dropoff_id) VALUES (?,?,?,?,?,?)";
         template.update(insert_sql, rentalContract.getStart_datetime(), rentalContract.getEnd_datetime(),
@@ -107,6 +109,7 @@ public class RentalContractRepository {
         return null;
     }
 
+    // ID getter - gets rental_contract_id by short format contracts start, end, person_id and motorhome_id attributes
     public Integer rentalContractIdByStartEndPersonIdMotorhomeId(InsertRentalContract rentalContract) {
         String sql = "SELECT rental_contract_id from rental_contracts WHERE start_datetime = ? and end_datetime = ? and person_id = ? and motorhome_id = ?";
         return template.queryForObject(sql,Integer.class, rentalContract.getStart_datetime().toString(),

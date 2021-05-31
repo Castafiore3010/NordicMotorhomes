@@ -17,22 +17,22 @@ public class PersonRepository  {
     JdbcTemplate template;
 
 
-    public List<Customer> fetchAllCustomers() {
+    public List<Customer> fetchAllCustomers() { // get all customers
 
         return template.query("SELECT * FROM persons where person_type = 'customer'", new BeanPropertyRowMapper<>(Customer.class));
     }
 
-    public List<Employee> fetchAllEmployees() {
+    public List<Employee> fetchAllEmployees() { // get all employees
         return template.query("SELECT * FROM persons where person_type = 'employee'", new BeanPropertyRowMapper<>(Employee.class));
     }
 
-    public boolean personInContract(int id) {
+    public boolean personInContract(int id) { // checks if person is in contract (for safe delete)
         String sql = "SELECT count(*) from rental_contracts WHERE person_id = ?";
         Integer result = template.queryForObject(sql, Integer.class, id);
         return result > 0;
     }
 
-    public Person insertPerson(Person person) {
+    public Person insertPerson(Person person) { // write Person data to database
 
         // insert country
         String country_sql = "INSERT INTO countries (country_name) VALUES ('"+person.getCountry_name()+"')";
@@ -73,7 +73,7 @@ public class PersonRepository  {
         return null;
     }
 
-    public Person fetchCustomerById(int id) {
+    public Person fetchCustomerById(int id) { // get specific customer
         String sql = "SELECT * from persons join addresses using (address_id) join zipcodes using (zipcode_id) " +
                 "join cities using (city_id) join countries using (country_id) WHERE person_id = ?";
         RowMapper<Customer> personRowMapper = new BeanPropertyRowMapper<>(Customer.class);
@@ -82,7 +82,7 @@ public class PersonRepository  {
 
     }
 
-    public Person fetchEmployeeById(int id) {
+    public Person fetchEmployeeById(int id) { // get specific employee
         String sql = "SELECT * from persons join addresses using (address_id) join zipcodes using (zipcode_id) " +
                 "join cities using (city_Id) join countries using (country_id) where person_id = ?";
         RowMapper<Employee> personRowMapper = new BeanPropertyRowMapper<>(Employee.class);
@@ -90,7 +90,7 @@ public class PersonRepository  {
         return person;
     }
 
-    public Person updatePerson(Person person){
+    public Person updatePerson(Person person){ // update Person data in database
 
         String persons_sql = "UPDATE persons SET "+
                 " first_name='"+person.getFirst_name()+"',"+
@@ -115,9 +115,9 @@ public class PersonRepository  {
         template.update(delete_sql);
         return null;
 
-    }
+    } // delete person in database
 
-    // ID getter methods
+    // ID getter methods - making sure we are referring to the right rows in database
     //<editor-fold desc="ID-getters">
     public Integer countryIdByCountryName(String country_name) {
         String sql = "SELECT country_id from countries where country_name = ?";
@@ -143,7 +143,7 @@ public class PersonRepository  {
         Integer address_id = template.queryForObject(sql, Integer.class, street_name, zipcode_id);
         return address_id;
     }
-
+    // checks if email already exists in database. Returns 1 or 0 with our database structure
     public boolean emailExists(String email) {
         String sql = "SELECT count(*) from persons where email = ?";
         return template.queryForObject(sql, Integer.class, email) > 0;
@@ -156,7 +156,7 @@ public class PersonRepository  {
     }
     //</editor-fold>
 
-    // Duplicate checker methods
+    // Duplicate checker methods - for database
     //<editor-fold desc="Duplicate Checkers">
     public Integer checkDuplicateEntry(String table_name, String attributeToCheck, String attributeValue) {
         String sql = "SELECT count(*) from " + table_name + " WHERE " + attributeToCheck + " = ?";
@@ -185,7 +185,7 @@ public class PersonRepository  {
     }
     //</editor-fold>  //
 
-    // update other tables
+    // update other tables - making sure relevant data goes where it belongs.
     //<editor-fold desc="Update methods for relevant tables">
     public Person updateAddress(Person person) {
         String sql = "update addresses set street_name ='"+ person.getStreet_name()+"' WHERE address_id = '"+ person.getAddress_id()+"'";
