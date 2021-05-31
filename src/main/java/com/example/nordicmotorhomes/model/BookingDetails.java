@@ -3,7 +3,7 @@ package com.example.nordicmotorhomes.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class bookingDetails {
+public class BookingDetails {
 
     // ids
     private int motorhome_id;
@@ -29,9 +29,9 @@ public class bookingDetails {
 
 
 
-    public bookingDetails() {}
+    public BookingDetails() {}
 
-    public bookingDetails(int motorhome_id, int pickUp_id, int dropOff_id, LocalDateTime start, LocalDateTime end,
+    public BookingDetails(int motorhome_id, int pickUp_id, int dropOff_id, LocalDateTime start, LocalDateTime end,
                           String person_first_name, String person_last_name, String person_email, String person_phone,
                           LocalDate person_birthdate, String street_address, String zipcode, String city_name,
                           String country, String fullAddress_pickup, String fullAddress_dropoff) {

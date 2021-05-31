@@ -146,7 +146,7 @@ public class HomeController {
     }
 
     @PostMapping("/confirmBooking")
-    public String confirmBooking(@ModelAttribute bookingDetails bookingDetails, Model model) {
+    public String confirmBooking(@ModelAttribute BookingDetails bookingDetails, Model model) {
         // BookingDetails object is mapped to model as "bookingDetails"
         model.addAttribute("bookingDetails", bookingDetails);
         // new Customer is created with data from BookingDetails object.
