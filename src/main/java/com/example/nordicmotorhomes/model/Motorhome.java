@@ -2,7 +2,10 @@ package com.example.nordicmotorhomes.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 @Entity
 public class Motorhome {
     @Id

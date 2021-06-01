@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 @Repository
 public class MotorhomeRepository {
     @Autowired

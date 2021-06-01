@@ -6,6 +6,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 @Repository
 public class PriceRepository {
     @Autowired

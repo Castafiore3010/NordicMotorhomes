@@ -10,6 +10,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 // https://developer.here.com/blog/how-to-use-geocoding-in-java-with-the-here-geocoding-search-api
 public class Geocoder {
     private static final String GEOCODING_RESOURCE = "https://geocode.search.hereapi.com/v1/geocode";

@@ -3,6 +3,10 @@ package com.example.nordicmotorhomes.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 public class BookingDetails {
 
     // ids

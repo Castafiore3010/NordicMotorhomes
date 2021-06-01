@@ -1,5 +1,10 @@
 package com.example.nordicmotorhomes.model;
 
+
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 public class ContactPointHelp {
     private int contact_point_id;
     private String contact_point_name;

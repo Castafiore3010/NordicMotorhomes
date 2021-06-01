@@ -3,7 +3,10 @@ package com.example.nordicmotorhomes.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
-
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 @Entity
 public abstract class Person {
     private int country_id;

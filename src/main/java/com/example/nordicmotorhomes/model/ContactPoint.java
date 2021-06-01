@@ -2,6 +2,10 @@ package com.example.nordicmotorhomes.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 
 @Entity
 public class ContactPoint {
@@ -26,7 +30,15 @@ public class ContactPoint {
         this.zipcode = zipcode;
         this.city_name = city_name;
     }
-
+    //made for testing
+    public ContactPoint(int contact_point_id,double latitude, double longitude, String street_name, String zipcode, String city_name) {
+        this.contact_point_id=contact_point_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.street_name = street_name;
+        this.zipcode = zipcode;
+        this.city_name = city_name;
+    }
 
 
     public ContactPoint(int contactPoint_id, double latitude, double longitude,

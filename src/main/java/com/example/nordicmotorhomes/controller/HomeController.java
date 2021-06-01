@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 @Controller
 public class HomeController {
 
@@ -29,6 +33,10 @@ public class HomeController {
     PriceService priceService;
 
 
+    /**
+     * @author Michael
+     * @return String representing HTML path
+     */
     // HOME PAGE
     @GetMapping("/")
     public String index() {
@@ -36,12 +44,22 @@ public class HomeController {
         return "home/index";
     }
 
+    /**
+     * @author Emma
+     * @return String representing HTML path
+     */
     // CREATES
     @GetMapping("/createCustomer")
         public String createCustomerLink() {
             return "home/createCustomer";
         }
 
+    /**
+     * @author Samavia
+     * @param customer Customer object
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/createCustomer")
     public String createCustomer(@ModelAttribute Customer customer, Model model) {
         model.addAttribute("customer", customer);
@@ -50,11 +68,21 @@ public class HomeController {
         return "redirect:/viewAllCustomers";
     }
 
+    /**
+     * @author Marc
+     * @return String representing HTML path
+     */
     @GetMapping("/createCustomerFromContract")
     public String createCustomerFromContractButton() {
         return "home/createCustomerFromContract";
     }
 
+    /**
+     * @author Michael
+     * @param customer Customer object
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/createCustomerFromContract")
     public String createCustomerFromContract(@ModelAttribute Customer customer, Model model){
         model.addAttribute("customer", customer);
@@ -62,12 +90,21 @@ public class HomeController {
         return "redirect:/createRentalContract";
     }
 
+    /**
+     * @author Emma
+     * @return String representing HTML path
+     */
     @GetMapping("/createEmployee")
     public String createEmployeeLink() {
         return "home/createEmployee";
     }
 
-
+    /**
+     * @author Samavia
+     * @param employee Employee object
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/createEmployee")
     public String createEmployee(@ModelAttribute Employee employee, Model model) {
         model.addAttribute("employee", employee);
@@ -76,9 +113,19 @@ public class HomeController {
         return "redirect:/viewAllEmployees";
     }
 
+    /**
+     * @author Marc
+     * @return String representing HTML path
+     */
     @GetMapping("/createMotorhome")
     public String createMotorhomeLink(){return "home/createMotorhome";}
 
+    /**
+     * @author Michael
+     * @param motorhome Motorhome object
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/createMotorhome")
     public String createMotorhome(@ModelAttribute Motorhome motorhome, Model model) {
         model.addAttribute("motorhome", motorhome);
@@ -86,9 +133,19 @@ public class HomeController {
         return "redirect:/viewAllMotorhomes";
     }
 
+    /**
+     * @author Emma
+     * @return String representing HTML path
+     */
     @GetMapping("/createMotorhomeFromContract")
     public String createMotorhomeButton() {return "home/createMotorhomeFromContract";}
 
+    /**
+     * @author Samavia
+     * @param motorhome Motorhome object
+     * @param model Maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/createMotorhomeFromContract")
     public String createMotorhomeFromContract(@ModelAttribute Motorhome motorhome, Model model) {
         model.addAttribute("motorhome", motorhome);
@@ -97,7 +154,12 @@ public class HomeController {
     }
 
 
-
+    /**
+     * @author Emma, Marc, Michael, Samavia
+     * @param searchResult Search result, contains the specified date and capacity
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/bookMotorhome") // search button in index
     public String searchMotorhome(@ModelAttribute SearchResult searchResult, Model model) {
         // searchResult(start,end, capacity) mapped to model, to hold user specified dates and capacity.
@@ -121,6 +183,14 @@ public class HomeController {
         return "home/bookingPage";
     }
 
+    /**
+     * @author Emma, Marc, Michael, Samavia
+     * @param id Pathvariable needed for fetching object
+     * @param start Pathvariable needed for the model
+     * @param end Pathvariable needed for the model
+     * @param model maps the objects
+     * @return String representing HTML path
+     */
     @GetMapping("/bookMotorhomeId={motorhome_id}/{start}/{end}") // Book now button on bookingPage
     public String bookNowButton(@PathVariable ("motorhome_id") int id,
                                 @PathVariable ("start") LocalDateTime start,
@@ -145,6 +215,12 @@ public class HomeController {
 
     }
 
+    /**
+     * @author Emma, Marc, Michael, Samavia
+     * @param bookingDetails object that contains all the needed information
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/confirmBooking")
     public String confirmBooking(@ModelAttribute BookingDetails bookingDetails, Model model) {
         // BookingDetails object is mapped to model as "bookingDetails"
@@ -245,15 +321,13 @@ public class HomeController {
 
         return "home/bookingConfirmed";
 
-
-
-
     }
 
-
-
-
-
+    /**
+     * @author Michael
+     * @param model maps objects fetched form DB
+     * @return String representing HTML path
+     */
     @GetMapping("/createRentalContract")
     public String createRentalContractLink(Model model) {
         List<Customer> customers = personService.fetchAllCustomers();
@@ -266,6 +340,12 @@ public class HomeController {
         return "home/createRentalContract";
     }
 
+    /**
+     * @author Marc
+     * @param rentalContract Rental contract object
+     * @param model maps object
+     * @return String representing HTML path
+     */
     @PostMapping("/createRentalContract")
     public String createRentalContract(@ModelAttribute InsertRentalContract rentalContract, Model model) {
         model.addAttribute("rentalContract", rentalContract);
@@ -274,6 +354,11 @@ public class HomeController {
     }
 
 
+    /**
+     * @author Emma
+     * @param model maps the objects from DB
+     * @return String representing HTML path
+     */
     // VIEW ALLS
     @GetMapping("/viewAllCustomers")
     public String viewAllCustomers(Model model) {
@@ -290,12 +375,22 @@ public class HomeController {
         return "home/viewAllCustomers";
     }
 
+    /**
+     * @author Samavia
+     * @param model maps data from DB
+     * @return String representing HTML path
+     */
     @GetMapping("/viewAllEmployees")
     public String viewAllEmployees(Model model) {
     model.addAttribute("employees",personService.fetchAllEmployees());
         return "home/viewAllEmployees";
     }
 
+    /**
+     * @author Marc
+     * @param model maps data from Database
+     * @return String representing HTML path
+     */
     @GetMapping("/viewAllMotorhomes")
     public String viewAllMotorhomes(Model model) {
         List<Motorhome> motorhomes = motorhomeService.fetchAllMotorhomes();
@@ -310,12 +405,23 @@ public class HomeController {
         return "home/viewAllMotorhomes";
     }
 
+    /**
+     * @author Emma
+     * @param model maps objects from Database
+     * @return String representing HTML path
+     */
     @GetMapping("/viewAllRentalContracts")
     public String viewAllRentalContracts(Model model) {
         model.addAttribute("rentalContracts", rentalContractService.fetchAllRentalContracts());
         return "home/viewAllRentalContracts";
     }
 
+    /**
+     * @author Michael
+     * @param id used to fetch data from Database
+     * @param model maps the data
+     * @return String representing HTML path
+     */
     // INSPECTS
     @GetMapping("/inspectPersonId={person_id}")
     public String inspectPerson(@PathVariable ("person_id") int id, Model model) {
@@ -325,6 +431,12 @@ public class HomeController {
         return "home/inspectPerson";
     }
 
+    /**
+     * @author Samavia
+     * @param id used to fetch data from Database
+     * @param model maps the data
+     * @return String representing HTML path
+     */
     @GetMapping("/inspectMotorhomeId={motorhome_id}")
     public String inspectMotorhome(@PathVariable ("motorhome_id") int id, Model model) {
         Motorhome motorhome = motorhomeService.findMotorhomeById(id);
@@ -332,6 +444,13 @@ public class HomeController {
 
         return "home/inspectMotorhome";
     }
+
+    /**
+     * @author Marc
+     * @param id used to fetch data from Database
+     * @param model maps the data
+     * @return String representing HTML path
+     */
     @GetMapping("/inspectRentalContractId={rental_contract_id}")
     public String inspectRentalContract(@PathVariable ("rental_contract_id")int id, Model model){
         RentalContract rentalContract = rentalContractService.findContractById(id);
@@ -339,6 +458,12 @@ public class HomeController {
         return "home/inspectRentalContract";
     }
 
+    /**
+     * @author Emma
+     * @param id used to fetch data from Database
+     * @param model maps the data
+     * @return String representing HTML path
+     */
     // UPDATES
     @GetMapping ("/updatePersonId={person_id}")
     public String updateCustomerButton(@PathVariable ("person_id") int id, Model model){
@@ -347,6 +472,12 @@ public class HomeController {
         return "home/updatePerson";
     }
 
+    /**
+     * @author Michael
+     * @param person Person object
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/updatePerson")
     public String updatePerson(@ModelAttribute Customer person, Model model){
         model.addAttribute("person",person);
@@ -359,6 +490,12 @@ public class HomeController {
 
     }
 
+    /**
+     * @author Marc
+     * @param id used to fetch data from Database
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @GetMapping ("/updateMotorhomeId={motorhome_id}")
     public String updateMotorhomeButton(@PathVariable ("motorhome_id") int id, Model model) {
         Motorhome motorhome = motorhomeService.findMotorhomeById(id);
@@ -366,6 +503,12 @@ public class HomeController {
         return "home/updateMotorhome";
     }
 
+    /**
+     * @author Samavia
+     * @param motorhome Motorhome object
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping("/updateMotorhome")
     public String updateMotorhome(@ModelAttribute Motorhome motorhome, Model model){
         model.addAttribute("motorhome", motorhome);
@@ -373,6 +516,12 @@ public class HomeController {
         return "redirect:/viewAllMotorhomes";
     }
 
+    /**
+     * @author Emma
+     * @param id used to fetch data from Database
+     * @param model maps the data
+     * @return String representing HTML path
+     */
     @GetMapping("/updateRentalContractId={rental_contract_id}")
     public String updateRentalContractButton(@PathVariable("rental_contract_id")int id, Model model){
         RentalContract rentalContract = rentalContractService.findContractById(id);
@@ -380,7 +529,12 @@ public class HomeController {
         return "home/updateRentalContract";
     }
 
-
+    /**
+     * @author Michael
+     * @param rentalContract Rental Contract object
+     * @param model maps the object
+     * @return String representing HTML path
+     */
     @PostMapping ("/updateRentalContract")
     public String updateRentalContract(@ModelAttribute RentalContract rentalContract, Model model){
     model.addAttribute("rentalContract",rentalContract);
@@ -390,6 +544,13 @@ public class HomeController {
 
     }
 
+    /**
+     * @author Marc
+     * @param rental_contract_id used to fetch data from Database
+     * @param id used to fetch data from Database
+     * @param model maps the data
+     * @return String representing HTML path
+     */
     @GetMapping("/updateContactPointId={contact_point_id}/{rental_contract_id}")
     public String updateContactPointButton(@PathVariable ("rental_contract_id") int rental_contract_id, @PathVariable("contact_point_id")int id, Model model){
         ContactPoint contactPoint = contactPointService.findContactPointById(id);
@@ -400,6 +561,12 @@ public class HomeController {
         return "home/updateContactPoint";
     }
 
+    /**
+     * @author Samavia
+     * @param contactPointHelp ContactPointHelp object
+     * @param model maps the data
+     * @return String representing HTML path
+     */
     @PostMapping("/updateContactPoint")
     public String updateContactPoint(@ModelAttribute ContactPointHelp contactPointHelp, Model model){ // Help object
 
@@ -416,7 +583,11 @@ public class HomeController {
 
     }
 
-
+    /**
+     * @author Emma
+     * @param id used to fetch data from Database
+     * @return String representing HTML path
+     */
     // DELETES
     @GetMapping("/deletePersonId={person_id}")
     public String deleteCustomer(@PathVariable ("person_id") int id) {
@@ -428,12 +599,23 @@ public class HomeController {
             return "redirect:/viewAllCustomers";
         }
     }
+
+    /**
+     * @author Samavia
+     * @param id used to fetch data from Database
+     * @return String representing HTML path
+     */
     @GetMapping("/deleteMotorhomeId={motorhome_id}")
     public String deleteMotorhome(@PathVariable ("motorhome_id") int id) {
         motorhomeService.deleteMotorhome(id);
         return "redirect:/viewAllMotorhomes";
     }
 
+    /**
+     * @author Michael
+     * @param id used to fetch data from Database
+     * @return String representing HTML path
+     */
     @GetMapping("/deleteRentalContractId={rental_contract_id}")
     public String deleteRentalContract(@PathVariable("rental_contract_id")int id){
         rentalContractService.deleteRentalContractById(id);

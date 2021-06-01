@@ -2,7 +2,10 @@ package com.example.nordicmotorhomes.model;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
-
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 @Entity
 public class Employee extends Person{
 

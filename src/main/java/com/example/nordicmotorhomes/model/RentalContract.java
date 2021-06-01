@@ -4,7 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 @Entity
 public class RentalContract {
     private int motorhome_id;

@@ -3,7 +3,10 @@ package com.example.nordicmotorhomes.model;
 import org.hibernate.sql.Insert;
 
 import java.time.LocalDateTime;
-
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 public class InsertRentalContract {
     private LocalDateTime start_datetime;
     private LocalDateTime end_datetime;

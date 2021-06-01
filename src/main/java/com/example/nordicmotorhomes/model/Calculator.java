@@ -4,7 +4,10 @@ import org.apache.tomcat.jni.Local;
 
 import java.time.*;
 import java.util.List;
-
+/**
+ * @author Marc,Emma,Samavia, Michael
+ * @version 1.0
+ */
 public class Calculator {
     private final RentalContract rentalContract;
     private final ContactPoint pickUp;
@@ -12,8 +15,6 @@ public class Calculator {
     private final List<ContactPoint> validPoints;
     private final double MOTORHOME_PRICE_PER_DAY;
     private String contract_season;
-
-
 
 
     public Calculator(RentalContract rentalContract, Price price, ContactPoint pickUp, ContactPoint dropOff, List<ContactPoint> validPoints) {
@@ -78,21 +79,32 @@ public class Calculator {
     }
 
 
-
-
-
+    /**
+     * @author Marc
+     * @return a double representing the price for the motorhome in a period
+     */
     public double calculateMotorhomePriceForPeriod() {
         Duration duration = Duration.between(rentalContract.getStart_datetime(), rentalContract.getEnd_datetime());
         return  MOTORHOME_PRICE_PER_DAY * duration.toDays();
     }
 
+    /**
+     * @author Michael
+     * @param distance
+     * @return the rounded amount
+     */
     public double calculateTransferCost(double distance) {
         int roundedDistance = (int) distance;
-        double transferCostPerKilometer = 0.70;
-        return roundedDistance * transferCostPerKilometer;
+        double PRICE_PER_KM_FROM_CONTACT_POINT = 0.7;
+        return roundedDistance * PRICE_PER_KM_FROM_CONTACT_POINT;
 
     }
 
+    /**
+     * @author Marc, Samavia
+     * @param initialPoint ContactPoint object, to be checked to a List of other ContantPoints
+     * @return the closest ContactPoint object compared to the given initialPoint
+     */
     public ContactPoint closestValidPoint(ContactPoint initialPoint) {
         System.out.println(contract_season);
         int id = -1; // id - updated to correct value line 109
@@ -115,21 +127,23 @@ public class Calculator {
         System.out.println("CLOSEST ID: " + id);
         return validPoints.get(id -1); // return "found" element in list.
 
-
-
     }
 
 
+    /**
+     * @author Emma
+     * @return The total price for the contract
+     */
     public double calculateTotalContractPrice() {
-        double motorhomeTotalPriceForPeriod = (calculateMotorhomePriceForPeriod());
+        double motorhomeTotalPriceForPeriod = (calculateMotorhomePriceForPeriod()); //the price found from the period alone
 
 
-        double distanceToClosestPickUp = pickUp.distanceTo(closestValidPoint(pickUp));
-        double distanceToClosestDropOff = dropOff.distanceTo(closestValidPoint(dropOff));
+        double distanceToClosestPickUp = pickUp.distanceTo(closestValidPoint(pickUp)); //The distance closest to the pickup-point chosen
+        double distanceToClosestDropOff = dropOff.distanceTo(closestValidPoint(dropOff)); //The distance closest to the dropoff-point chosen
 
 
-        double transferCostPickUp = calculateTransferCost(distanceToClosestPickUp);
-        double transferCostDropOff = calculateTransferCost(distanceToClosestDropOff);
+        double transferCostPickUp = calculateTransferCost(distanceToClosestPickUp); //add the distance to the specified 0.7€ for each kilometer
+        double transferCostDropOff = calculateTransferCost(distanceToClosestDropOff); //add the distance to the specified 0.7€ for each kilometer
 
         return motorhomeTotalPriceForPeriod + transferCostPickUp + transferCostDropOff;
 
