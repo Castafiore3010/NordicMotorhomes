@@ -21,14 +21,27 @@ public class ContactPointRepository {
     @Autowired
     JdbcTemplate template;
 
+    /**
+     * @author Michael
+     * @return a list of all the contact points
+     */
     public List<ContactPoint> fetchAllContactPoints() { // get all contactpoints.
         return template.query("SELECT * from contact_points", new BeanPropertyRowMapper<>(ContactPoint.class));
     }
 
+    /**
+     * @author Emma
+     * @return a list of all valid contact points (determined by NMR)
+     */
     public List<ContactPoint> fetchAllValidContactPoints() { // get all valid contactpoints
         return template.query("SELECT * FROM contact_points where contact_point_type = 'valid'", new BeanPropertyRowMapper<>(ContactPoint.class));
     }
 
+    /**
+     * @author Marc, Michael
+     * @param contactPoint A newly made contactpoint object. Finds coordinates to attach to it
+     * @return null, we dont need an object returned here
+     */
     public ContactPoint insertContactPoint(ContactPoint contactPoint) { // write data from ContactPoint to database
         Geocoder geocoder = new Geocoder();
         String fullAddress = contactPoint.getStreet_name() + ", " + contactPoint.getCity_name() + ", " + contactPoint.getZipcode();
@@ -72,6 +85,12 @@ public class ContactPointRepository {
 
 
     }
+
+    /**
+     * @author Samavia, Emma
+     * @param contactPoint intended object/entity to change
+     * @return null
+     */
     public ContactPoint updateContactPoint(ContactPoint contactPoint){
         Geocoder geocoder = new Geocoder();
         String fullAddress = contactPoint.getStreet_name() + ", " + contactPoint.getCity_name() + ", " + contactPoint.getZipcode();
@@ -103,6 +122,11 @@ public class ContactPointRepository {
         return null;
     }
 
+    /**
+     * @author Michael
+     * @param id used for DML
+     * @return the entities specified
+     */
     public ContactPoint findContactPointById(int id){
         String sql = "SELECT contact_point_id, latitude, longitude, contact_point_name," +
                 " contact_point_type, address_id, street_name, zipcode, city_name " +
@@ -115,12 +139,25 @@ public class ContactPointRepository {
 
     }
 
+    /**
+     * @author Marc
+     * @param city_name used for DML
+     * @param country_id used for DML
+     * @return specified entities from DML
+     */
     // checks if city exists in country in database. Returns numOfRows (count(*)) that satisfy the conditions
     public Integer checkCityExistsInCountry(String city_name, int country_id) {
         String sql = "SELECT count(*) from cities WHERE city_name = ? and country_id = ?";
         Integer result = template.queryForObject(sql, Integer.class, city_name, country_id);
         return result;
     }
+
+    /**
+     * @author Samavia
+     * @param zipcode used for DML
+     * @param country_id used for DML
+     * @return the specified entities from DML
+     */
     // checks if zip exists in country in database. Returns numOfRows (count(*)) that satisfy the conditions
     public Integer zipcodeExistsInCountry(String zipcode, int country_id) {
         String sql = "SELECT count(*) FROM zipcodes join cities using (city_id) join countries using (country_id)" +
@@ -128,6 +165,13 @@ public class ContactPointRepository {
         Integer result = template.queryForObject(sql, Integer.class, zipcode, country_id);
         return result;
     }
+
+    /**
+     * @author Emma
+     * @param street_name used for DML
+     * @param zipcode_id used for DML
+     * @return the specifired entities from DML
+     */
     // checks if address exists in zipcode in database. Returns numOfRows (count(*)) that satisfy the conditions
     public Integer addressExistsInZipcode(String street_name, Integer zipcode_id) {
         String sql = "SELECT count(*) from addresses join zipcodes using (zipcode_id)" +
@@ -136,13 +180,22 @@ public class ContactPointRepository {
         return result;
     }
 
-
+    /**
+     * @author Samavia
+     * @param city_name used for DML
+     * @return the city_id from DML
+     */
     public Integer cityIdByCityName(String city_name) {
         String sql = "SELECT city_id from cities where city_name = ?";
         Integer city_id = template.queryForObject(sql, Integer.class, city_name);
         return city_id;
     }
 
+    /**
+     * @author Marc
+     * @param zipcode  used for DML
+     * @return zipcode id
+     */
     public Integer zipcodeIdByZipcode(String zipcode) {
         String sql = "SELECT zipcode_id from zipcodes where zipcode = ?";
         Integer zipcode_id = template.queryForObject(sql, Integer.class, zipcode);
@@ -150,17 +203,33 @@ public class ContactPointRepository {
 
     }
 
+    /**
+     * @author Michael
+     * @param street_name used for DML
+     * @param zipcode_id used for DML
+     * @return the selected address id
+     */
     public Integer addressIdByAddNameAndZipcodeId(String street_name, int zipcode_id) {
         String sql = "SELECT address_id from addresses where street_name = ? and zipcode_id = ?";
         Integer address_id = template.queryForObject(sql, Integer.class,street_name, zipcode_id);
         return address_id;
     }
 
+    /**
+     * @author Emma
+     * @param coordinates used for DML
+     * @return contactPoint id
+     */
     public Integer contactPointIdByLatAndLng(double[] coordinates) {
         String sql = "SELECT contact_point_id from contact_points WHERE latitude = ? and longitude = ?";
         return template.queryForObject(sql,Integer.class, coordinates[0], coordinates[1]);
     }
 
+    /**
+     * @author Samavia
+     * @param contactPoint  used for DML
+     * @return null
+     */
     // update other tables
     //<editor-fold desc="Update methods for relevant tables">
     public ContactPoint updateAddress(ContactPoint contactPoint) {
@@ -170,7 +239,11 @@ public class ContactPointRepository {
     }
 
 
-
+    /**
+     * @author Marc, Michael
+     * @param contactPoint   used for DML
+     * @return null
+     */
     public ContactPoint updateCity(ContactPoint contactPoint) {
         String select_sql = "SELECT city_id from addresses join zipcodes using (zipcode_id) join cities using (city_id) WHERE address_id = ?";
         int city_id = template.queryForObject(select_sql, Integer.class, contactPoint.getAddress_id());

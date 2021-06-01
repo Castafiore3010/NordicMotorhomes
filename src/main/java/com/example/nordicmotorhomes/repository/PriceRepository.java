@@ -15,6 +15,11 @@ public class PriceRepository {
     @Autowired
     JdbcTemplate template;
 
+    /**
+     * @author Emma
+     * @param id used for DML
+     * @return select from DML
+     */
 
     public Price findPriceById(int id) {
         String find_sql = "SELECT * FROM prices WHERE price_id = ?";

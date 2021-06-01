@@ -21,7 +21,11 @@ public class RentalContractRepository {
     @Autowired
     JdbcTemplate template;
 
-
+    /**
+     * @author Michael
+     * @return list of finished to contract.
+     * we dont actually use this method yet, but we left it in for the next team
+     */
     public List<RentalContract> fetchAllFinishedRentalContracts() { // get all contracts with end before today
         LocalDateTime now = LocalDateTime.now();
         List<RentalContract> rentalContracts = fetchAllRentalContracts();
@@ -37,6 +41,13 @@ public class RentalContractRepository {
 
     }
 
+    /**
+     * @author Marc
+     * @param motorhome used for DML
+     * @param start_datetime used for DML
+     * @param end_datetime used for DML
+     * @return true of false based on count DML
+     */
     // checks if motorhome is in contract in specified period between start_datetime and end_datetime,
     // by counting number of rows in database that satisfy where & and clauses
     public boolean motorhomeInContractInPeriod(Motorhome motorhome, LocalDateTime start_datetime,
@@ -54,6 +65,10 @@ public class RentalContractRepository {
         return inContract;
     }
 
+    /**
+     * @author Emma
+     * @return a list of rental contracts
+     */
     public List<RentalContract> fetchAllRentalContracts() { // get all contracts in database
         String fetch = "SELECT motorhome_id, person_id, rental_contract_id, start_datetime, end_datetime," +
                 " contact_point_pickup_id, contact_point_dropoff_id, cp1.contact_point_name AS pickup_name," +
@@ -69,6 +84,11 @@ public class RentalContractRepository {
 
     }
 
+    /**
+     * @author Samavia
+     * @param id used for DML
+     * @return Rental COntract object. found by DML
+     */
     public RentalContract findContractById(int id){ // get specific contract in database
         String fetch = "SELECT motorhome_id, person_id, rental_contract_id, start_datetime, end_datetime," +
                 " contact_point_pickup_id, contact_point_dropoff_id, cp1.contact_point_name AS pickup_name," +
@@ -83,12 +103,22 @@ public class RentalContractRepository {
         return template.queryForObject(fetch,new BeanPropertyRowMapper<>(RentalContract.class),id);
     }
 
+    /**
+     * @author Michael
+     * @param id used for DML
+     * @return null
+     */
     public RentalContract deleteRentalContractById(int id){ // delete specific contract in database
         String delete_sql = "DELETE FROM rental_contracts WHERE rental_contract_id = ?";
         template.update(delete_sql,id);
         return null;
     }
 
+    /**
+     * @author Marc
+     * @param rentalContract  used for DML
+     * @return null
+     */
     public RentalContract updateRentalContract(RentalContract rentalContract){ // update specific contract in database
         String update_sql = "UPDATE rental_contracts SET start_datetime = '"+ rentalContract.getStart_datetime() +
                 "', end_datetime = '"+ rentalContract.getEnd_datetime()+
@@ -102,6 +132,11 @@ public class RentalContractRepository {
     return null;
     }
 
+    /**
+     * @author Emma
+     * @param rentalContract used for DML
+     * @return null
+     */
     public RentalContract insertRentalContract(InsertRentalContract rentalContract) { // insert contract data
         String insert_sql = "INSERT INTO rental_contracts (start_datetime, end_datetime, person_id, motorhome_id, " +
                 "contact_point_pickup_id, contact_point_dropoff_id) VALUES (?,?,?,?,?,?)";
@@ -112,11 +147,18 @@ public class RentalContractRepository {
         return null;
     }
 
+    /**
+     * @author Samavia
+     * @param rentalContract used for DML
+     * @return Integer, rental contract id
+     */
     // ID getter - gets rental_contract_id by short format contracts start, end, person_id and motorhome_id attributes
     public Integer rentalContractIdByStartEndPersonIdMotorhomeId(InsertRentalContract rentalContract) {
         String sql = "SELECT rental_contract_id from rental_contracts WHERE start_datetime = ? and end_datetime = ? and person_id = ? and motorhome_id = ?";
         return template.queryForObject(sql,Integer.class, rentalContract.getStart_datetime().toString(),
                 rentalContract.getEnd_datetime().toString(), rentalContract.getPerson_id(), rentalContract.getMotorhome_id());
     }
+
+
 
 }

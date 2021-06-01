@@ -20,22 +20,39 @@ public class PersonRepository  {
     @Autowired
     JdbcTemplate template;
 
-
+    /**
+     * @author Marc
+     * @return a list of customers
+     */
     public List<Customer> fetchAllCustomers() { // get all customers
 
         return template.query("SELECT * FROM persons where person_type = 'customer'", new BeanPropertyRowMapper<>(Customer.class));
     }
 
+    /**
+     * @author Michael
+     * @return a list of employees
+     */
     public List<Employee> fetchAllEmployees() { // get all employees
         return template.query("SELECT * FROM persons where person_type = 'employee'", new BeanPropertyRowMapper<>(Employee.class));
     }
 
+    /**
+     * @author Emma
+     * @param id used for DML
+     * @return true or false, based on the count
+     */
     public boolean personInContract(int id) { // checks if person is in contract (for safe delete)
         String sql = "SELECT count(*) from rental_contracts WHERE person_id = ?";
         Integer result = template.queryForObject(sql, Integer.class, id);
         return result > 0;
     }
 
+    /**
+     * @author Samavia
+     * @param person intended person to insert
+     * @return null
+     */
     public Person insertPerson(Person person) { // write Person data to database
 
         // insert country
@@ -77,6 +94,11 @@ public class PersonRepository  {
         return null;
     }
 
+    /**
+     * @author Marc
+     * @param id used for DML
+     * @return the person found by DML
+     */
     public Person fetchCustomerById(int id) { // get specific customer
         String sql = "SELECT * from persons join addresses using (address_id) join zipcodes using (zipcode_id) " +
                 "join cities using (city_id) join countries using (country_id) WHERE person_id = ?";
@@ -86,6 +108,11 @@ public class PersonRepository  {
 
     }
 
+    /**
+     * @author Michael
+     * @param id used for DML
+     * @return the person found by DML
+     */
     public Person fetchEmployeeById(int id) { // get specific employee
         String sql = "SELECT * from persons join addresses using (address_id) join zipcodes using (zipcode_id) " +
                 "join cities using (city_Id) join countries using (country_id) where person_id = ?";
@@ -94,6 +121,11 @@ public class PersonRepository  {
         return person;
     }
 
+    /**
+     * @author Emma, Samavia
+     * @param person intended person to update
+     * @return the updated person
+     */
     public Person updatePerson(Person person){ // update Person data in database
 
         String persons_sql = "UPDATE persons SET "+
@@ -114,6 +146,11 @@ public class PersonRepository  {
         return person;
     }
 
+    /**
+     * @author Marc
+     * @param id used for DML
+     * @return null
+     */
     public Person deletePersonById(int id) {
         String delete_sql = "DELETE FROM persons where person_id = " + id;
         template.update(delete_sql);
@@ -121,6 +158,11 @@ public class PersonRepository  {
 
     } // delete person in database
 
+    /**
+     * @author Michael
+     * @param country_name used for DML
+     * @return the country's id
+     */
     // ID getter methods - making sure we are referring to the right rows in database
     //<editor-fold desc="ID-getters">
     public Integer countryIdByCountryName(String country_name) {
@@ -129,12 +171,22 @@ public class PersonRepository  {
         return country_id;
     }
 
+    /**
+     * @author Emma
+     * @param city_name used for DML
+     * @return the city ID
+     */
     public Integer cityIdByCityName(String city_name) {
         String sql = "SELECT city_id from cities where city_name = ?";
         Integer city_id = template.queryForObject(sql, Integer.class, city_name);
         return city_id;
     }
 
+    /**
+     * @author Samavia
+     * @param zipcode used to DML
+     * @return zipcode ID
+     */
     public Integer zipcodeIdByZipcode(String zipcode) {
         String sql = "SELECT zipcode_id from zipcodes where zipcode = ?";
         Integer zipcode_id = template.queryForObject(sql, Integer.class, zipcode);
@@ -142,16 +194,34 @@ public class PersonRepository  {
 
     }
 
+    /**
+     * @author Marc
+     * @param street_name used for DML
+     * @param zipcode_id used for DML
+     * @return address ID from DML
+     */
     public Integer addressIdByAddNameAndZipcodeId(String street_name, int zipcode_id) {
         String sql = "SELECT address_id from addresses where street_name = ? and zipcode_id = ?";
         Integer address_id = template.queryForObject(sql, Integer.class, street_name, zipcode_id);
         return address_id;
     }
+
+    /**
+     * @author Michael
+     * @param email used for DML
+     * @return true or false, depending on count
+     */
     // checks if email already exists in database. Returns 1 or 0 with our database structure
     public boolean emailExists(String email) {
         String sql = "SELECT count(*) from persons where email = ?";
         return template.queryForObject(sql, Integer.class, email) > 0;
     }
+
+    /**
+     * @author Emma
+     * @param email used for DML
+     * @return person id from DML
+     */
     public Integer personIdByEmail(String email) {
         String sql = "SELECT person_id from persons where email = ?";
         Integer person_id = template.queryForObject(sql, Integer.class, email);
@@ -160,6 +230,13 @@ public class PersonRepository  {
     }
     //</editor-fold>
 
+    /**
+     * @author Samavia
+     * @param table_name used for DML
+     * @param attributeToCheck used for DML
+     * @param attributeValue used for DML
+     * @return count from DML
+     */
     // Duplicate checker methods - for database
     //<editor-fold desc="Duplicate Checkers">
     public Integer checkDuplicateEntry(String table_name, String attributeToCheck, String attributeValue) {
@@ -168,12 +245,24 @@ public class PersonRepository  {
         return result;
     }
 
+    /**
+     * @author Emma
+     * @param city_name used for DML
+     * @param country_id  used for DML
+     * @return count from DML
+     */
     public Integer checkCityExistsInCountry(String city_name, int country_id) {
         String sql = "SELECT count(*) from cities WHERE city_name = ? and country_id = ?";
         Integer result = template.queryForObject(sql, Integer.class, city_name, country_id);
         return result;
     }
 
+    /**
+     * @author Michael
+     * @param zipcode used for DML
+     * @param country_id used for DML
+     * @return count from DML
+     */
     public Integer zipcodeExistsInCountry(String zipcode, int country_id) {
         String sql = "SELECT count(*) FROM zipcodes join cities using (city_id) join countries using (country_id)" +
                 " WHERE zipcode = ? and country_id = ?";
@@ -181,6 +270,12 @@ public class PersonRepository  {
         return result;
     }
 
+    /**
+     * @author Marc
+     * @param street_name used for DML
+     * @param zipcode_id used for DML
+     * @return count from DML
+     */
     public Integer addressExistsInZipcode(String street_name, Integer zipcode_id) {
         String sql = "SELECT count(*) from addresses join zipcodes using (zipcode_id)" +
                 " WHERE street_name = ? and zipcode_id = ?";
@@ -189,6 +284,11 @@ public class PersonRepository  {
     }
     //</editor-fold>  //
 
+    /**
+     * @author Emma
+     * @param person used for DML
+     * @return null
+     */
     // update other tables - making sure relevant data goes where it belongs.
     //<editor-fold desc="Update methods for relevant tables">
     public Person updateAddress(Person person) {
@@ -197,6 +297,11 @@ public class PersonRepository  {
         return null;
     }
 
+    /**
+     * @author Samavia
+     * @param person  used for DML
+     * @return null
+     */
     public Person updateZipcode(Person person) {
         String sql = "update zipcodes set zipcode ='"+ person.getZipcode()+"' WHERE zipcode_id = '"+ person.getZipcode_id()+"'";
         template.update(sql);
@@ -204,6 +309,11 @@ public class PersonRepository  {
 
     }
 
+    /**
+     * @author Marc
+     * @param person used for DML
+     * @return null
+     */
     public Person updateCountry(Person person) {
         String sql = "update countries set country_name ='"+ person.getCountry_name()+"' WHERE country_id = '"+ person.getCountry_id()+"'";
         template.update(sql);
@@ -211,6 +321,11 @@ public class PersonRepository  {
 
     }
 
+    /**
+     * @author Michael
+     * @param person used for DML
+     * @return null
+     */
     public Person updateCity(Person person) {
         String sql = "update cities set city_name ='"+ person.getCity_name()+"' WHERE city_id = '"+ person.getCity_id()+"'";
         template.update(sql);
